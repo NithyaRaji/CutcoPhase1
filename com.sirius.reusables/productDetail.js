@@ -5,6 +5,7 @@ var browseObj = require('../com.sirius.pageObjects/browseByCategory_po.js');
 var shoppingCartObj = require('../com.sirius.pageObjects/shoppingCartPage_po.js');
 var reportInfo = require('../com.sirius.library/reportInfo.js');
 var utilities = require('../com.sirius.reusables/utilities.js');
+var homePageObj = require('../com.sirius.pageObjects/homePage_po.js');
 const {
     expect
 } = require("chai");
@@ -96,7 +97,7 @@ let productDetails = function () {
         utilities.HighlightElement(shoppingCartObjPO.lastQty);
         utilities.scrollTo(shoppingCartObjPO.lastQty);
         shoppingCartObjPO.lastQty.click()
-
+        // expect(shoppingCartObjPO.quantityNumber11.isDisplayed()).toBeFalsy(); // failing, need to check
         //shoppingCartObjPO.selectQuantity(value);
         utilities.waitUtilElementPresent(shoppingCartObjPO.qtyModalOKButton, waitTimeout);
         reportInfo.log('Last Quantity option is clicked in the quantity modal');
@@ -125,7 +126,7 @@ let productDetails = function () {
         //   expect(productDetailsPO.quantityDropDownEdit).to.exist;
 
         //Click on quantity option and check for the maximam value of it
-       // utilities.scrollTo(productDetailsPO.quantityDropDownEdit.getWebElement());
+        // utilities.scrollTo(productDetailsPO.quantityDropDownEdit.getWebElement());
         utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
         browser.wait(EC.visibilityOf(productDetailsPO.quantityDropDownEdit), waitTimeout);
         productDetailsPO.quantityDropDownEdit.click();
@@ -144,6 +145,123 @@ let productDetails = function () {
         utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
         utilities.HighlightElement(productDetailsPO.quantityDropDownEdit);
     }
+
+
+    this.maxQuantityVerificationRegularOrder = function () {
+        var productDetailsPO = new productDetailsObj();
+        var shoppingCartObjPO = new shoppingCartObj();
+        utilities.waitForElement(productDetailsPO.carousalImageVerify, waitTimeout);
+        utilities.HighlightElement(productDetailsPO.carousalImageVerify);
+        reportInfo.log('Product Details page is loaded completely');
+        utilities.attachScreenshot();
+        utilities.scrollTo(productDetailsPO.quantityDropDownEdit.getWebElement());
+        utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
+        browser.wait(EC.visibilityOf(productDetailsPO.quantityDropDownEdit), waitTimeout);
+        productDetailsPO.quantityDropDownEdit.click();
+
+        utilities.HighlightElement(productDetailsPO.productMoreOptionDropdown);
+        productDetailsPO.productMoreOptionDropdown.click();
+        utilities.pageWait(5);
+        utilities.HighlightElement(productDetailsPO.productMoreOptionsQty);
+        productDetailsPO.productMoreOptionsQty.sendKeys('9999');
+        expect((productDetailsPO.notMoreThan999Error).isDisplayed());
+        utilities.HighlightElement(productDetailsPO.notMoreThan999Error);
+        utilities.pageWaitSec(1);
+        utilities.attachScreenshot();
+        productDetailsPO.productMoreOptionsQty.clear();
+        productDetailsPO.productMoreOptionsQty.sendKeys('999');
+        utilities.HighlightElement(productDetailsPO.productQtyOkButton);
+        productDetailsPO.productQtyOkButton.click();
+        utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
+        expect((productDetailsPO.quantityDropDownEdit).isDisplayed());
+        utilities.HighlightElement(productDetailsPO.quantityDropDownEdit);
+    }
+
+    this.maxQuantityVerificationPromoOrder = function () {
+        var productDetailsPO = new productDetailsObj();
+        var shoppingCartObjPO = new shoppingCartObj();
+        utilities.waitForElement(productDetailsPO.carousalImageVerify, waitTimeout);
+        utilities.HighlightElement(productDetailsPO.carousalImageVerify);
+        reportInfo.log('Product Details page is loaded completely');
+        utilities.attachScreenshot();
+        utilities.scrollTo(productDetailsPO.quantityDropDownEdit.getWebElement());
+        utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
+        browser.wait(EC.visibilityOf(productDetailsPO.quantityDropDownEdit), waitTimeout);
+        productDetailsPO.quantityDropDownEdit.click();
+
+        utilities.HighlightElement(productDetailsPO.productMoreOptionDropdown);
+        productDetailsPO.productMoreOptionDropdown.click();
+        utilities.pageWait(5);
+        utilities.HighlightElement(productDetailsPO.productMoreOptionsQty);
+        productDetailsPO.productMoreOptionsQty.sendKeys('999');
+        expect((productDetailsPO.notMoreThan99Error).isDisplayed());
+        utilities.HighlightElement(productDetailsPO.notMoreThan99Error);
+        utilities.pageWaitSec(1);
+        utilities.attachScreenshot();
+        productDetailsPO.productMoreOptionsQty.clear();
+        productDetailsPO.productMoreOptionsQty.sendKeys('99');
+        utilities.HighlightElement(productDetailsPO.productQtyOkButton);
+        productDetailsPO.productQtyOkButton.click();
+        utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
+        expect((productDetailsPO.quantityDropDownEdit).isDisplayed());
+        utilities.HighlightElement(productDetailsPO.quantityDropDownEdit);
+    }
+
+    this.maxQuantityVerificationLITorder = function () {
+        var productDetailsPO = new productDetailsObj();
+        var shoppingCartObjPO = new shoppingCartObj();
+        utilities.waitForElement(productDetailsPO.carousalImageVerify, waitTimeout);
+        utilities.HighlightElement(productDetailsPO.carousalImageVerify);
+        reportInfo.log('Product Details page is loaded completely');
+        utilities.attachScreenshot();
+        utilities.scrollTo(productDetailsPO.quantityDropDownEdit.getWebElement());
+        utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
+        browser.wait(EC.visibilityOf(productDetailsPO.quantityDropDownEdit), waitTimeout);
+        productDetailsPO.quantityDropDownEdit.click();
+
+        utilities.HighlightElement(productDetailsPO.productMoreOptionDropdown);
+        productDetailsPO.productMoreOptionDropdown.click();
+        utilities.pageWait(5);
+        utilities.HighlightElement(productDetailsPO.productMoreOptionsQty);
+
+        var homePagePO = new homePageObj();
+        var store;
+        homePagePO.profilePlace.getText().then(function (text) {
+            store = text;
+            console.log("**** store **** ", store);
+            if (store.indexOf("Cutco") === -1) {
+                console.log('in vector company');
+                productDetailsPO.productMoreOptionsQty.sendKeys('99999');
+                expect((productDetailsPO.notMoreThan9999Error).isDisplayed());
+                utilities.HighlightElement(productDetailsPO.notMoreThan9999Error);
+                utilities.pageWaitSec(1);
+                utilities.attachScreenshot();
+                productDetailsPO.productMoreOptionsQty.clear();
+                productDetailsPO.productMoreOptionsQty.sendKeys('9999');
+                utilities.HighlightElement(productDetailsPO.productQtyOkButton);
+                productDetailsPO.productQtyOkButton.click();
+                utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
+                expect((productDetailsPO.quantityDropDownEdit).isDisplayed());
+                utilities.HighlightElement(productDetailsPO.quantityDropDownEdit);
+            }
+            else {
+                console.log('in cutco company');
+                productDetailsPO.productMoreOptionsQty.sendKeys('9999');
+                expect((productDetailsPO.notMoreThan999Error).isDisplayed());
+                utilities.HighlightElement(productDetailsPO.notMoreThan999Error);
+                utilities.pageWaitSec(1);
+                utilities.attachScreenshot();
+                productDetailsPO.productMoreOptionsQty.clear();
+                productDetailsPO.productMoreOptionsQty.sendKeys('999');
+                utilities.HighlightElement(productDetailsPO.productQtyOkButton);
+                productDetailsPO.productQtyOkButton.click();
+                utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
+                expect((productDetailsPO.quantityDropDownEdit).isDisplayed());
+                utilities.HighlightElement(productDetailsPO.quantityDropDownEdit);
+            }
+        })
+    }
+
 
     this.addProduct = function () {
         var shopCartPO = new shoppingCartObj();
@@ -190,8 +308,6 @@ let productDetails = function () {
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
             var productDetailsPO = new productDetailsObj();
             utilities.scrollTo(productDetailsPO.addToCartButton);
-            utilities.waitUtilElementPresent(productDetailsPO.addToCartButton);
-            utilities.HighlightElement(productDetailsPO.addToCartButton);
             browser.sleep(2000);
             browser.executeScript("document.getElementById('btn_addToCart_pp').click()");
             reportInfo.log('Add to Cart button is clicked in the product details page');
@@ -334,7 +450,7 @@ let productDetails = function () {
     this.searchResultsNavigation = function () {
         var browsePO = new browserDetailsObj();
         var productDetailsPO = new productDetailsObj();
-        utilities.pageWaitSec(5);
+        utilities.pageWait();
         utilities.waitUtilElementPresent(browsePO.listOfSearchResult, waitTimeout);
         utilities.HighlightElement(browsePO.listOfSearchResult);
         // browsePO.listOfSearchResult.click();
@@ -414,13 +530,13 @@ let productDetails = function () {
         var productDetailsPO = new productDetailsObj();
         var browserDetailsPO = new browserDetailsObj();
         var storeSKU = skuID;
-        // console.log('***** storeSKU ****** ', storeSKU);
-       // utilities.waitUtilElementPresent(productDetailsPO.skuNumber, waitTimeout);
-       utilities.waitForElement(productDetailsPO.skuNumber, waitTimeout);
+        console.log('***** storeSKU ****** ', storeSKU);
+        // utilities.waitUtilElementPresent(productDetailsPO.skuNumber, waitTimeout);
+        utilities.waitForElement(productDetailsPO.skuNumber, waitTimeout);
         utilities.HighlightElement(productDetailsPO.skuNumber);
         productDetailsPO.skuNumber.getText().then(function (text) {
             var Actual = text;
-           // console.log('****** Actual Comments ******', text);
+            console.log('****** Actual Comments ******', text);
             assert.include(Actual, storeSKU);
         });
         reportInfo.log('Verification Point - Search term is verified in the search text field');
@@ -430,18 +546,18 @@ let productDetails = function () {
         var productDetailsPO = new productDetailsObj();
         var browserDetailsPO = new browserDetailsObj();
         var storeProduct = productName;
-       // console.log('***** storeSKU ****** ', storeProduct);
+        console.log('***** storeSKU ****** ', storeProduct);
         utilities.waitUtilElementPresent(productDetailsPO.skuNumber, waitTimeout);
         utilities.HighlightElement(productDetailsPO.skuNumber);
 
         productDetailsPO.searchProductName.getText().then(function (text) {
             var Actual = text;
-           // console.log('****** Actual Comments ******', text);
+            console.log('****** Actual Comments ******', text);
             //assert.include(Actual, storeProduct);
         });
     }
 
-    this.pdpQuantityClick = function() {
+    this.pdpQuantityClick = function () {
         var productDetailsPO = new productDetailsObj();
         var shoppingCartObjPO = new shoppingCartObj();
         utilities.waitForElement(productDetailsPO.quantityDropDown, waitTimeout);
@@ -450,11 +566,11 @@ let productDetails = function () {
         productDetailsPO.quantityDropDown.click();
     }
 
-    this.verifyLITQuantitySelect = function(value) {
+    this.verifyLITQuantitySelect = function (value) {
         utilities.pageWaitSec(3);
         expect(element(by.xpath("//ion-label[contains(text(),'50')]")));
         expect(element(by.xpath("//ion-label[contains(text(),'100')]")));
-        var button = element(by.xpath("//ion-label[contains(text(),'"+value+"')]/..//ion-radio"));
+        var button = element(by.xpath("//ion-label[contains(text(),'" + value + "')]/..//ion-radio"));
         button.click();
         var shoppingCartObjPO = new shoppingCartObj();
         utilities.pageWaitSec(3);

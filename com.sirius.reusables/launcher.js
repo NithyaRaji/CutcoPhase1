@@ -7,8 +7,8 @@ let launcher = function () {
 	this.launchApplication = function () {
 		var currentBrowserName = browserDetails.browserName;
 		var currentDeviceName = browserDetails.executionName;
-		// console.log("currentBrowserName : ", currentBrowserName);
-		// console.log("currentDeviceName : ", currentDeviceName);
+		console.log("currentBrowserName : ", currentBrowserName);
+		console.log("currentDeviceName : ", currentDeviceName);
 		switch (currentBrowserName) {
 			case 'chrome':
 				browser.driver.manage().window().maximize();
@@ -62,11 +62,11 @@ let launcher = function () {
 
 function switchAppContext(context) {
 	browser.driver.getCurrentContext().then(function (currentContext) {
-		// console.log("Current context is: " + currentContext);
+		console.log("Current context is: " + currentContext);
 	});
 	browser.driver.selectContext(context).then(function () {
 		browser.driver.getCurrentContext().then(function (newContext) {
-			// console.log("Switched context to: " + newContext);
+			console.log("Switched context to: " + newContext);
 			return newContext;
 		});
 	});

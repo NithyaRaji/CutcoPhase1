@@ -1,6 +1,6 @@
 var reportInfo = require('../com.sirius.library/reportInfo.js');
 var utilities = require('./utilities.js');
-var shippingPageObj = require('../com.sirius.pageObjects/shippingPage_po.js');
+var shippingPageObj = require('../com.sirius.pageObjects/addressesPage_po.js');
 var testInputs = require('../com.sirius.testData/data.json');
 var paymentPageObj = require('../com.sirius.pageObjects/paymentPage_po.js');
 
@@ -25,12 +25,14 @@ let shippingPage = function () {
         utilities.HighlightElement(shippingPagePO.nextButton);
         shippingPagePO.nextButton.click();
         // browser.executeScript("document.getElementById('btn_next_sp').click()");
-        utilities.pageWaitSec(5);
+        browser.sleep(15000);
         utilities.scrollTo(paymentPagePO.billingAddressSection);
         utilities.waitUtilElementPresent(paymentPagePO.billingAddressSection, waitTimeout);
         browser.sleep(5000);
         reportInfo.log("Next button is clicked in the shipping page")
         utilities.HighlightElement(paymentPagePO.billingAddressSection);
     }
+
+    
 }
 module.exports = new shippingPage();

@@ -24,7 +24,7 @@ let browseByCategory = function () {
             element(by.xpath(".//ion-label[contains(.,'Catalog update failed')]")).isPresent().then(function (isVisible) {
                 utilities.log("is visible value", isVisible);
                 var value = (isVisible === true);
-               // console.log("isvisible condition value", value);
+                console.log("isvisible condition value", value);
                 if (isVisible) {
                     utilities.log("Retry btn is displaying");
                     utilities.HighlightElement(element(by.xpath(".//ion-label[contains(.,' Catalog update failed')]")));
@@ -124,7 +124,7 @@ let browseByCategory = function () {
         var browsePO = new browseObj();
         var shoppingCartPage_po = new shoppingCartObj();
         var mobiledevice = browserDetails.executionName;
-        // console.log(mobiledevice);
+        console.log(mobiledevice);
         // if ( browserDetails.executionName !== 'iphone') {
         // if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
         //     console.log("tour navigation disabled for mobile devices");
@@ -163,7 +163,7 @@ let browseByCategory = function () {
         var browsePO = new browseObj();
         var shoppingCartPage_po = new shoppingCartObj();
         var mobiledevice = browserDetails.executionName;
-        //console.log(mobiledevice);
+        console.log(mobiledevice);
         // if ( browserDetails.executionName !== 'iphone') {
         // if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
         //     console.log("tour navigation disabled for mobile devices");
@@ -201,14 +201,12 @@ let browseByCategory = function () {
     this.handlePopup = function () {
         var browsePO = new browseObj();
         var mobiledevice = browserDetails.executionName;
-        // console.log(mobiledevice);
+        console.log(mobiledevice);
         // if ( browserDetails.executionName !== 'iphone') {
         // if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
         //     console.log("tour navigation disabled for mobile devices");
         // }
-        // else {  
-        utilities.pageWaitSec(5);  
-        utilities.waitUtilElementPresent(browsePO.popupNextButton); 
+        // else {       
         utilities.HighlightElement(browsePO.popupNextButton);
         browsePO.popupNextButton.click();
         utilities.HighlightElement(browsePO.popupNextButton);
@@ -217,7 +215,7 @@ let browseByCategory = function () {
         browsePO.popupNextButton.click();
         utilities.HighlightElement(browsePO.popupDoneButton);
         browsePO.popupDoneButton.click();
-         //  }
+        //   }
         // }
     }
 

@@ -24,31 +24,31 @@ let addressValidation = function () {
             utilities.HighlightElement(addressPagePO.CustTypeError);
             utilities.waitUtilElementPresent(addressPagePO.CustTypeError);
             expect(addressPagePO.CustTypeError.getText()).toEqual('Customer Type is required');
-          //  console.log('---->', addressPagePO.CustTypeError.getText());
+            console.log('---->', addressPagePO.CustTypeError.getText());
             utilities.HighlightElement(addressPagePO.firstNameError);
             utilities.waitUtilElementPresent(addressPagePO.firstNameError);
             expect(addressPagePO.firstNameError.getText()).toEqual('First name is required');
-          //  console.log('---->', addressPagePO.firstNameError.getText());
+            console.log('---->', addressPagePO.firstNameError.getText());
             utilities.HighlightElement(addressPagePO.lastNameError);
             utilities.waitUtilElementPresent(addressPagePO.lastNameError);
             expect(addressPagePO.lastNameError.getText()).toEqual('Last name is required');
-          //  console.log('---->', addressPagePO.lastNameError.getText());
+            console.log('---->', addressPagePO.lastNameError.getText());
 
             utilities.HighlightElement(addressPagePO.addressError);
             utilities.waitUtilElementPresent(addressPagePO.addressError);
             expect(addressPagePO.addressError.getText()).toEqual('Address is required');
-           // console.log('---->', addressPagePO.addressError.getText());
+            console.log('---->', addressPagePO.addressError.getText());
 
             utilities.HighlightElement(addressPagePO.zipcodeError);
             utilities.waitUtilElementPresent(addressPagePO.zipcodeError);
             expect(addressPagePO.zipcodeError.getText()).toEqual('Zip Code is required');
-           // console.log('---->', addressPagePO.zipcodeError.getText());
+            console.log('---->', addressPagePO.zipcodeError.getText());
 
             utilities.HighlightElement(addressPagePO.phoneError);
             utilities.attachScreenshot();
             utilities.waitUtilElementPresent(addressPagePO.phoneError);
             expect(addressPagePO.phoneError.getText()).toEqual('Phone is required');
-            // console.log('---->', addressPagePO.phoneError.getText());
+            console.log('---->', addressPagePO.phoneError.getText());
 
         });
     }

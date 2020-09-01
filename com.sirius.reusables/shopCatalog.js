@@ -37,7 +37,7 @@ let shopCatalog = function () {
         shopCatalogPO.storageOptionCheckbox.isPresent().then(function (result) {
             utilities.log("shopCatalogPO.storageOptionCheckbox found ", result);
             if (result) {
-                // console.log("selecting storageOptionCheckbox");
+                console.log("selecting storageOptionCheckbox");
                 utilities.scrollTo(shopCatalogPO.storageOptionCheckbox);
                 utilities.HighlightElement(shopCatalogPO.storageOptionCheckbox);
                 shopCatalogPO.storageOptionCheckbox.isEnabled().then(function (result) {
@@ -52,7 +52,7 @@ let shopCatalog = function () {
         shopCatalogPO.blockFinishCheckbox.isPresent().then(function (result) {
             utilities.log("shopCatalogPO.blockFinishCheckbox found ", result);
             if (result) {
-               // console.log("selecting blockFinishCheckbox");
+                console.log("selecting blockFinishCheckbox");
                 utilities.scrollTo(shopCatalogPO.blockFinishCheckbox);
                 utilities.HighlightElement(shopCatalogPO.blockFinishCheckbox);
                 shopCatalogPO.blockFinishCheckbox.isEnabled().then(function (result) {
@@ -78,7 +78,7 @@ let shopCatalog = function () {
         shopCatalogPO.storageOptionCheckbox.isPresent().then(function (result) {
             utilities.log("shopCatalogPO.storageOptionCheckbox found ", result);
             if (result) {
-                // console.log("selecting storageOptionCheckbox");
+                console.log("selecting storageOptionCheckbox");
                 utilities.scrollTo(shopCatalogPO.storageOptionCheckbox);
                 utilities.HighlightElement(shopCatalogPO.storageOptionCheckbox);
                 shopCatalogPO.storageOptionCheckbox.isEnabled().then(function (result) {
@@ -93,7 +93,7 @@ let shopCatalog = function () {
         shopCatalogPO.blockFinishCheckbox.isPresent().then(function (result) {
             utilities.log("shopCatalogPO.blockFinishCheckbox found ", result);
             if (result) {
-                // console.log("selecting blockFinishCheckbox");
+                console.log("selecting blockFinishCheckbox");
                 utilities.scrollTo(shopCatalogPO.blockFinishCheckbox);
                 utilities.HighlightElement(shopCatalogPO.blockFinishCheckbox);
                 shopCatalogPO.blockFinishCheckbox.isEnabled().then(function (result) {
@@ -107,7 +107,7 @@ let shopCatalog = function () {
         shopCatalogPO.chefKnifeCheckbox.isPresent().then(function (result) {
             utilities.log("shopCatalogPO.chefKnifeCheckbox found ", result);
             if (result) {
-               // console.log("selecting chefKnifeCheckbox");
+                console.log("selecting chefKnifeCheckbox");
                 utilities.scrollTo(shopCatalogPO.chefKnifeCheckbox);
                 utilities.HighlightElement(shopCatalogPO.chefKnifeCheckbox);
                 shopCatalogPO.chefKnifeCheckbox.isEnabled().then(function (result) {
@@ -121,7 +121,7 @@ let shopCatalog = function () {
         shopCatalogPO.rivetHandleColorCheckbox.isPresent().then(function (result) {
             utilities.log("shopCatalogPO.rivetHandleColorCheckbox found ", result);
             if (result) {
-               // console.log("selecting rivetHandleColorCheckbox");
+                console.log("selecting rivetHandleColorCheckbox");
                 utilities.scrollTo(shopCatalogPO.rivetHandleColorCheckbox);
                 utilities.HighlightElement(shopCatalogPO.rivetHandleColorCheckbox);
                 shopCatalogPO.rivetHandleColorCheckbox.isEnabled().then(function (result) {

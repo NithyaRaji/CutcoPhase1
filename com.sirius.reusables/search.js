@@ -21,8 +21,6 @@ let search = function () {
                 utilities.HighlightElement(browsePO.searchMobileIcon);
                 browser.executeScript("document.getElementsByName('search')[1].click()");
             } else {
-                utilities.waitUtilElementPresent(browsePO.searchMobileIcon, waitTimeout);
-                utilities.HighlightElement(browsePO.searchMobileIcon);
                 browser.executeScript("document.getElementsByName('search')[1].click()");
             }
             utilities.waitUtilElementPresent(browsePO.searchInputMobile, waitTimeout);
@@ -45,6 +43,7 @@ let search = function () {
             var shoppingCartPO = new shopCartObj();
             utilities.pageWaitSec(4);
             browser.executeScript("document.getElementById('productSearchBar').value=''");
+            reportInfo.log('Search input is clicked');
             reportInfo.log('Search input is clicked');
             utilities.waitUtilElementPresent(browsePO.searchInput, waitTimeout);
             browsePO.searchInput.sendKeys(skuID);
@@ -183,13 +182,11 @@ let search = function () {
         var browsePO = new browseObj();
         var shoppingCartPO = new shopCartObj();
         browser.sleep(4000);
-        utilities.waitUtilElementPresent(browsePO.searchAddToCartButton1);
-        utilities.HighlightElement(browsePO.searchAddToCartButton1);
         browsePO.searchAddToCartButton1.click();
         browser.sleep(4000);
 
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-            utilities.waitUtilElementPresent(browsePO.searchCloseOption, waitTimeout);
+            utilities.waitForElement(browsePO.searchCloseOption, waitTimeout);
             browsePO.searchCloseOption.click();
             utilities.pageWait();
             browser.executeScript("document.getElementsByName('cart')[1].click()");

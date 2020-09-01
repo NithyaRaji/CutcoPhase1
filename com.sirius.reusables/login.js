@@ -51,7 +51,7 @@ let loginApp = function () {
     this.loginValidations = function () {
         var loginPO = new loginPOj();
         utilities.waitForElement(loginPO.usernameText, waitTime);
-        utilities.HighlightElement(loginPO.usernameText);
+        utilities.HighlightElement(loginPO.usernameText); 
         utilities.HighlightElement(loginPO.passwordText);
         utilities.HighlightElement(loginPO.loginButton);
         utilities.HighlightElement(loginPO.needHelpLink);
@@ -74,6 +74,43 @@ let loginApp = function () {
                 utilities.HighlightElement(loginPO.forgotPage);
             })
         }
+    }
+
+
+    this.forgotPasswordVerification = function () {
+        var loginPO = new loginPOj();
+        utilities.waitForElement(loginPO.forgotPasswordLinkLoginPage, waitTime);
+        utilities.HighlightElement(loginPO.forgotPasswordLinkLoginPage);
+        loginPO.forgotPasswordLinkLoginPage.click();
+        utilities.waitForElement(loginPO.resetPasswordPage, waitTime);
+        utilities.HighlightElement(loginPO.resetPasswordPage);
+        utilities.waitForElement(loginPO.resetPasswordTitle, waitTime);
+        utilities.HighlightElement(loginPO.resetPasswordTitle);
+        utilities.attachScreenshot();
+    }
+
+    this.needHelpVerification = function () {
+        var loginPO = new loginPOj();
+        utilities.waitForElement(loginPO.forgotPasswordLinkLoginPage, waitTime);
+        utilities.HighlightElement(loginPO.forgotPasswordLinkLoginPage);
+        loginPO.forgotPasswordLinkLoginPage.click();
+        utilities.waitForElement(loginPO.resetPasswordPage, waitTime);
+        utilities.HighlightElement(loginPO.resetPasswordPage);
+        utilities.waitForElement(loginPO.resetPasswordTitle, waitTime);
+        utilities.HighlightElement(loginPO.resetPasswordTitle);
+        utilities.attachScreenshot();
+    }  
+
+    this.forgotUserIdVerification = function () {
+        var loginPO = new loginPOj();
+        utilities.waitForElement(loginPO.forgotPasswordLinkLoginPage, waitTime);
+        utilities.HighlightElement(loginPO.forgotPasswordLinkLoginPage);
+        loginPO.forgotPasswordLinkLoginPage.click();
+        utilities.waitForElement(loginPO.resetPasswordPage, waitTime);
+        utilities.HighlightElement(loginPO.resetPasswordPage);
+        utilities.waitForElement(loginPO.resetPasswordTitle, waitTime);
+        utilities.HighlightElement(loginPO.resetPasswordTitle);
+        utilities.attachScreenshot();
     }
 
     this.loginAccountSetup = function () {
@@ -112,8 +149,8 @@ let loginApp = function () {
                 reportInfo.log('Chrome Browser is invoked');
                 utilities.attachScreenshot();
                 utilities.waitUtilElementPresent(loginPO.usernameText, waitTime);
-                // console.log("Logggggg username::" + process.env.chrome);
-                // console.log("Logggggg username::" + process.env.password);
+                console.log("Logggggg username::" + process.env.chrome);
+                console.log("Logggggg username::" + process.env.password);
                 loginPO.usernameText.sendKeys("sr1");
                 loginPO.passwordText.sendKeys("Cutco@123");
                 reportInfo.log('Username and password are entered');
@@ -122,11 +159,11 @@ let loginApp = function () {
                 break;
 
             case 'firefox':
-                reportInfo.log('Firefox Browser is invoked');
+                reportInfo.log('Firefox Browser is invoked'); 
                 utilities.attachScreenshot();
                 utilities.waitUtilElementPresent(loginPO.usernameText, waitTime);
-                // console.log("Logggggg username::" + process.env.firefox);
-                // console.log("Logggggg username::" + process.env.password);
+                console.log("Logggggg username::" + process.env.firefox);
+                console.log("Logggggg username::" + process.env.password);
                 // loginPO.usernameText.sendKeys(process.env.firefox);
                 // loginPO.passwordText.sendKeys(process.env.password);
                 loginPO.usernameText.sendKeys("sr2");
@@ -153,8 +190,8 @@ let loginApp = function () {
                 reportInfo.log('Safari Browser is invoked');
                 utilities.waitForElement(loginPO.usernameText, waitTime);
                 utilities.waitForElement(loginPO.passwordText, waitTime);
-                // console.log("Logggggg username::" + process.env.safari);
-                // console.log("Logggggg username::" + process.env.password);
+                console.log("Logggggg username::" + process.env.safari);
+                console.log("Logggggg username::" + process.env.password);
                 // loginPO.usernameText.sendKeys(process.env.safari);
                 // loginPO.passwordText.sendKeys(process.env.password);
                 loginPO.usernameText.sendKeys("sr3");
@@ -170,7 +207,7 @@ let loginApp = function () {
                     reportInfo.log('iphone app is invoked');
                     utilities.waitUtilElementPresent(loginPO.usernameText, waitTime);
                     utilities.waitForElement(loginPO.passwordText, waitTime);
-                    // console.log(process.env);
+                    console.log(process.env);
                     // loginPO.usernameText.sendKeys(process.env.iPhone);
                     // loginPO.passwordText.sendKeys(process.env.password);
                     loginPO.usernameText.sendKeys("sr4");
@@ -234,8 +271,8 @@ let loginApp = function () {
                 reportInfo.log('Chrome Browser is invoked');
                 utilities.attachScreenshot();
                 utilities.waitUtilElementPresent(loginPO.usernameText, waitTime);
-                // console.log("Logggggg username::" + process.env.chrome);
-                // console.log("Logggggg username::" + process.env.password);
+                console.log("Logggggg username::" + process.env.chrome);
+                console.log("Logggggg username::" + process.env.password);
                 loginPO.usernameText.sendKeys(usrType+"1");
                 loginPO.passwordText.sendKeys("Cutco@123");
                 reportInfo.log('Username and password are entered');
@@ -247,8 +284,8 @@ let loginApp = function () {
                 reportInfo.log('Firefox Browser is invoked');
                 utilities.attachScreenshot();
                 utilities.waitUtilElementPresent(loginPO.usernameText, waitTime);
-                // console.log("Logggggg username::" + process.env.firefox);
-                // console.log("Logggggg username::" + process.env.password);
+                console.log("Logggggg username::" + process.env.firefox);
+                console.log("Logggggg username::" + process.env.password);
                 // loginPO.usernameText.sendKeys(process.env.firefox);
                 // loginPO.passwordText.sendKeys(process.env.password);
                 loginPO.usernameText.sendKeys(usrType+"2");
@@ -275,8 +312,8 @@ let loginApp = function () {
                 reportInfo.log('Safari Browser is invoked');
                 utilities.waitForElement(loginPO.usernameText, waitTime);
                 utilities.waitForElement(loginPO.passwordText, waitTime);
-                // console.log("Logggggg username::" + process.env.safari);
-                // console.log("Logggggg username::" + process.env.password);
+                console.log("Logggggg username::" + process.env.safari);
+                console.log("Logggggg username::" + process.env.password);
                 // loginPO.usernameText.sendKeys(process.env.safari);
                 // loginPO.passwordText.sendKeys(process.env.password);
                 loginPO.usernameText.sendKeys(usrType+"4");
@@ -292,7 +329,7 @@ let loginApp = function () {
                     reportInfo.log('iphone app is invoked');
                     utilities.waitUtilElementPresent(loginPO.usernameText, waitTime);
                     utilities.waitForElement(loginPO.passwordText, waitTime);
-                    // console.log(process.env);
+                    console.log(process.env);
                     // loginPO.usernameText.sendKeys(process.env.iPhone);
                     // loginPO.passwordText.sendKeys(process.env.password);
                     loginPO.usernameText.sendKeys(usrType+"5");

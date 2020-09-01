@@ -35,6 +35,36 @@ let paymentPage = function () {
         paymentPO.saveOrderOverlayButton.click();
     }
 
+    this.verifyPaymentOption = function(){
+        //browser.sleep(50000);
+        var paymentPagePO = new paymentPageObj();
+        var homePagePO = new homePageObj();
+        var store;
+        utilities.scrollTo(paymentPagePO.paymentMethodHeader);
+        utilities.HighlightElement(paymentPagePO.paymentMethodHeader);
+        utilities.waitForElement(paymentPagePO.creditCardPayment);
+        utilities.HighlightElement(paymentPagePO.creditCardPayment);
+        expect((paymentPagePO.creditCardPayment).isDisplayed());
+        utilities.HighlightElement(paymentPagePO.paperChequePayment);
+        expect((paymentPagePO.paperChequePayment).isDisplayed());
+        homePagePO.companyNameMobile.getText().then(function (text) {
+            store = text;
+            console.log("***actual text***", text);
+            console.log("**** store ****", store);
+            console.log("Vector CA Index Value", store.indexOf("Vector CA"));
+            console.log("**** Index Value of Cutco Home US **** ", store.indexOf("Cutco at Home US"));
+            console.log("**** store - Context Value Vector US **** ", store.indexOf("Vector US"));
+        if (store.indexOf("Vector CA") == -1) {
+        utilities.waitForElement(paymentPagePO.achCard);
+        expect(paymentPagePO.achCard.isPresent()).toBeFalsy();
+        //expect(shoppingCartPO.checkoutButton.isPresent()).toBeFalsy();
+        }else{
+        utilities.HighlightElement(paymentPagePO.achCard);
+        expect((paymentPagePO.achCard).isDisplayed());
+        }
+    })
+  }
+
     this.promoBillingSaveCA = function () {
         var paymentPO = new paymentPageObj();
         var shoppingCartPO = new shoppingCartObj();
@@ -160,10 +190,7 @@ let paymentPage = function () {
         shoppingCartPO.saveOrderReasonField.sendKeys('save order with adjustments');
         utilities.HighlightElement(paymentPagePO.saveOrderOverlayButton);
         paymentPagePO.saveOrderOverlayButton.click();
-        utilities.waitUtilElementPresent(homePagePO.pendingOrderHeader);
-        utilities.HighlightElement(homePagePO.pendingOrderHeader);
-        homePagePO.pendingOrderHeader.click();
-        utilities.waitUtilElementPresent(homePagePO.comments);
+
         utilities.waitUtilElementPresent(homePagePO.comments, waitTimeout);
         utilities.HighlightElement(homePagePO.comments);
     }
@@ -217,7 +244,7 @@ let paymentPage = function () {
         paymentPagePO.eventHandleThis.isPresent().then(function (result) {
             utilities.log("paymentPagePO.eventHandleThis found ", result);
             if (result) {
-                //console.log("selecting let event handle this");
+                console.log("selecting let event handle this");
                 utilities.waitUtilElementPresent(paymentPagePO.eventHandleThis, waitTimeout);
                 utilities.HighlightElement(paymentPagePO.eventHandleThis);
                 paymentPagePO.eventHandleThis.click();
@@ -245,7 +272,7 @@ let paymentPage = function () {
         paymentPagePO.eventHandleThis.isPresent().then(function (result) {
             utilities.log("paymentPagePO.eventHandleThis found ", result);
             if (result) {
-                // console.log("selecting let event handle this");
+                console.log("selecting let event handle this");
                 utilities.waitUtilElementPresent(paymentPagePO.eventHandleThis, waitTimeout);
                 utilities.HighlightElement(paymentPagePO.eventHandleThis);
                 paymentPagePO.eventHandleThis.click();
@@ -323,101 +350,47 @@ let paymentPage = function () {
         }
     }
 
-    this.cardDetailsCheckout = function (testInputs) {
+   this.cardDetailsCheckout = function (testInputs) {
         var paymentPagePO = new paymentPageObj();
         var cardDetails = testInputs;
-        browser.sleep(5000);
-        browser.waitForAngularEnabled(false);
-        utilities.scrollTo(paymentPagePO.customerNotPresentCheckbox);
-        browser.switchTo().frame(element(by.id("braintree-hosted-field-number")).getWebElement());
-        browser.sleep(5000);
-        utilities.HighlightElement(paymentPagePO.cardDetailsNumberTextbox)
+        browser.sleep(3000);
+        utilities.waitForElement(paymentPagePO.cardDetailsNumberTextbox, waitTimeout);
+        utilities.scrollTo(paymentPagePO.cardDetailsNumberTextbox);
+        utilities.waitForElement(paymentPagePO.cardDetailsNumberTextbox, waitTimeout);
+        utilities.HighlightElement(paymentPagePO.cardDetailsNumberTextbox);
         paymentPagePO.cardDetailsNumberTextbox.sendKeys(cardDetails.cardDetail);
-        browser.switchTo().defaultContent();
         utilities.pageWait(5000);
-        browser.switchTo().frame(element(by.id("braintree-hosted-field-cvv")).getWebElement());
-        utilities.HighlightElement(paymentPagePO.cvvTextbox)
-        paymentPagePO.cvvTextbox.sendKeys("123");
-        browser.switchTo().defaultContent();
-        browser.switchTo().frame(element(by.id("braintree-hosted-field-expirationMonth")).getWebElement());
-        utilities.pageWait(5000);
-        browser.sleep(15000);
-        paymentPagePO.expMonth.click();
-        browser.switchTo().defaultContent();
-        if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-            utilities.waitForElement(paymentPagePO.expyearMobile);
-            utilities.HighlightElement(paymentPagePO.expyearMobile);
-            paymentPagePO.expyearMobile.click();
-            utilities.pageWaitSec(5);
-            utilities.HighlightElement(paymentPagePO.expyearMobileOK);
-            paymentPagePO.expyearMobileOK.click();
-        }
-        else {
-            browser.switchTo().frame(element(by.id("braintree-hosted-field-expirationYear")).getWebElement());
-            utilities.waitForElement(paymentPagePO.year);
-            utilities.HighlightElement(paymentPagePO.year);
-            paymentPagePO.expyear.click();
-            utilities.pageWaitSec(5);
-            browser.switchTo().defaultContent();
-        }
+        utilities.HighlightElement(paymentPagePO.year);
+        paymentPagePO.year.click();
+
+        utilities.waitForElement(paymentPagePO.expyear);
+        utilities.HighlightElement(paymentPagePO.expyear);
+        paymentPagePO.expyear.click();
+        utilities.pageWaitSec(5);
 
         utilities.scrollTo(paymentPagePO.customerNotPresentCheckbox);
         utilities.HighlightElement(paymentPagePO.customerNotPresentCheckbox);
-        paymentPagePO.customerNotPresentCheckbox.click();
+        paymentPagePO.customerNotPresentCheckbox.click(); 
     }
 
     this.cardDetailsCheckout1 = function (testInputs) {
         var paymentPagePO = new paymentPageObj();
         var cardDetails = testInputs;
-        // browser.sleep(3000);
-        // utilities.waitForElement(paymentPagePO.cardDetailsNumberTextbox, waitTimeout);
-        // utilities.scrollTo(paymentPagePO.cardDetailsNumberTextbox);
-        // utilities.waitForElement(paymentPagePO.cardDetailsNumberTextbox, waitTimeout);
-        // utilities.HighlightElement(paymentPagePO.cardDetailsNumberTextbox);
-        // paymentPagePO.cardDetailsNumberTextbox.sendKeys(cardDetails.cardDetail);
-        // utilities.pageWait(5000);
-        // utilities.HighlightElement(paymentPagePO.year);
-        // paymentPagePO.year.click();
-        // utilities.waitForElement(paymentPagePO.expyear);
-        // utilities.HighlightElement(paymentPagePO.expyear);
-        // paymentPagePO.expyear.click();
-        // utilities.pageWaitSec(5);
-        browser.sleep(5000);
-        browser.waitForAngularEnabled(false);
-        utilities.scrollTo(paymentPagePO.customerNotPresentCheckbox);
-        browser.switchTo().frame(element(by.id("braintree-hosted-field-number")).getWebElement());
-        browser.sleep(5000);
-        utilities.HighlightElement(paymentPagePO.cardDetailsNumberTextbox)
+        browser.sleep(3000);
+        utilities.waitForElement(paymentPagePO.cardDetailsNumberTextbox, waitTimeout);
+        utilities.scrollTo(paymentPagePO.cardDetailsNumberTextbox);
+        utilities.waitForElement(paymentPagePO.cardDetailsNumberTextbox, waitTimeout);
+        utilities.HighlightElement(paymentPagePO.cardDetailsNumberTextbox);
         paymentPagePO.cardDetailsNumberTextbox.sendKeys(cardDetails.cardDetail);
-        browser.switchTo().defaultContent();
         utilities.pageWait(5000);
-        browser.switchTo().frame(element(by.id("braintree-hosted-field-cvv")).getWebElement());
-        utilities.HighlightElement(paymentPagePO.cvvTextbox)
-        paymentPagePO.cvvTextbox.sendKeys("123");
-        browser.switchTo().defaultContent();
-        browser.switchTo().frame(element(by.id("braintree-hosted-field-expirationMonth")).getWebElement());
-        utilities.pageWait(5000);
-        browser.sleep(15000);
-        paymentPagePO.expMonth.click();
-        browser.switchTo().defaultContent();
-        if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-            utilities.waitForElement(paymentPagePO.expyearMobile);
-            utilities.HighlightElement(paymentPagePO.expyearMobile);
-            paymentPagePO.expyearMobile.click();
-            utilities.pageWaitSec(5);
-            utilities.HighlightElement(paymentPagePO.expyearMobileOK);
-            paymentPagePO.expyearMobileOK.click();
-        }
-        else {
-            browser.switchTo().frame(element(by.id("braintree-hosted-field-expirationYear")).getWebElement());
-            utilities.waitForElement(paymentPagePO.year);
-            utilities.HighlightElement(paymentPagePO.year);
-            paymentPagePO.expyear.click();
-            utilities.pageWaitSec(5);
-            browser.switchTo().defaultContent();
-        }
+        utilities.HighlightElement(paymentPagePO.year);
+        paymentPagePO.year.click();
 
-
+        utilities.waitForElement(paymentPagePO.expyear);
+        utilities.HighlightElement(paymentPagePO.expyear);
+        paymentPagePO.expyear.click();
+        utilities.pageWaitSec(5);
+        
     }
 
     this.starCardDetails = function (cardNumber, AuthDate, code, amount) {
@@ -454,11 +427,11 @@ let paymentPage = function () {
         // }
     }
 
-    this.customerNotPresentClick = function () {
-        var paymentPagePO = new paymentPageObj();
+    this.customerNotPresentClick=function(){
+        var paymentPagePO= new paymentPageObj();
         utilities.scrollTo(paymentPagePO.customerNotPresentCheckbox);
-        utilities.HighlightElement(paymentPagePO.customerNotPresentCheckbox);
-        paymentPagePO.customerNotPresentCheckbox.click();
+         utilities.HighlightElement(paymentPagePO.customerNotPresentCheckbox);
+         paymentPagePO.customerNotPresentCheckbox.click();
     }
 
 
@@ -558,14 +531,14 @@ let paymentPage = function () {
         paymentPagePO.twoDayShippingMethod.isPresent().then(function (result) {
             utilities.log("paymentPagePO.twoDayShippingMethod found ", result);
             if (result) {
-                // console.log("selecting 2DY shipping");
+                console.log("selecting 2DY shipping");
                 utilities.click(paymentPagePO.twoDayShippingMethod);
             }
         });
         paymentPagePO.expressShippingMethod.isPresent().then(function (result) {
             utilities.log("paymentPagePO.expressShippingMethod found ", result);
             if (result) {
-                // console.log("selecting Next DY shipping");
+                console.log("selecting Next DY shipping");
                 if (browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
                     paymentPagePO.expressShippingMethod.click();
                 } else {
@@ -576,11 +549,11 @@ let paymentPage = function () {
         paymentPagePO.handDeliveredMethod.isPresent().then(function (result) {
             utilities.log("paymentPagePO.handDeliveredMethod found ", result);
             if (result) {
-                // console.log("selecting Next DY shipping");
+                console.log("selecting Next DY shipping");
                 utilities.click(paymentPagePO.handDeliveredMethod);
             }
         });
-        //console.log("selecting GND shipping");
+        console.log("selecting GND shipping");
     }
 
     this.selectBeforeChristmas = function () {
@@ -606,7 +579,7 @@ let paymentPage = function () {
         paymentPagePO.handDeliveredMethod.isPresent().then(function (result) {
             utilities.log("paymentPagePO.handDeliveredMethod found ", result);
             if (result) {
-                // console.log("selecting handDeliveredMethod shipping");
+                console.log("selecting handDeliveredMethod shipping");
 
             }
         });
@@ -668,7 +641,7 @@ let paymentPage = function () {
         utilities.HighlightElement(paymentPagePO.exemptBothTaxable);
         paymentPagePO.exemptBothTaxable.click();
         reportInfo.log("entering certificate number");
-        //console.log("entering certificate number");
+        console.log("entering certificate number");
         utilities.waitForElement(paymentPagePO.certificateNumber);
         utilities.scrollTo(paymentPagePO.certificateNumber)
         utilities.HighlightElement(paymentPagePO.certificateNumber);
@@ -696,20 +669,13 @@ let paymentPage = function () {
 
     }
 
-    this.selectTwoDayShipping = function () {
-        var paymentPO = new paymentPageObj();
-        utilities.waitForElement(paymentPO.twoDayShippingMethod);
-        utilities.HighlightElement(paymentPO.twoDayShippingMethod);
-        paymentPO.twoDayShippingMethod.click();
-    }
-
 
     this.selectTaxExempt = function () {
         var paymentPagePO = new paymentPageObj();
         var paymentPagePO = new paymentPageObj();
         browser.executeScript("arguments[0].click();", paymentPagePO.exemptBothTaxable);
         reportInfo.log("entering certificate number");
-        //console.log("entering certificate number");
+        console.log("entering certificate number");
         utilities.waitForElement(paymentPagePO.certificateNumber);
         utilities.scrollTo(paymentPagePO.certificateNumber)
         utilities.HighlightElement(paymentPagePO.certificateNumber);
@@ -723,7 +689,7 @@ let paymentPage = function () {
         utilities.HighlightElement(paymentPagePO.exemptPstTaxable);
         paymentPagePO.exemptPstTaxable.click();
         reportInfo.log("entering certificate number");
-        // console.log("entering certificate number");
+        console.log("entering certificate number");
         utilities.waitForElement(paymentPagePO.certificateNumber);
         utilities.scrollTo(paymentPagePO.certificateNumber)
         utilities.HighlightElement(paymentPagePO.certificateNumber);
@@ -737,7 +703,7 @@ let paymentPage = function () {
         utilities.HighlightElement(paymentPagePO.exemptGstTaxable);
         paymentPagePO.exemptGstTaxable.click();
         reportInfo.log("entering certificate number");
-        //console.log("entering certificate number");
+        console.log("entering certificate number");
         utilities.waitForElement(paymentPagePO.certificateNumber);
         utilities.scrollTo(paymentPagePO.certificateNumber)
         utilities.HighlightElement(paymentPagePO.certificateNumber);
@@ -812,7 +778,7 @@ let paymentPage = function () {
 
     }
 
-    this.PlaceOrderButtonClick = function () {
+      this.PlaceOrderButtonClick = function () {
         var paymentPagePO = new paymentPageObj();
         utilities.scrollTo(paymentPagePO.placeOrderButton);
         utilities.waitUtilElementPresent(paymentPagePO.placeOrderButton, waitTimeout);
@@ -821,7 +787,7 @@ let paymentPage = function () {
         utilities.pageWaitSec(5);
     }
 
-    this.imdoneButtonClick1 = function () {
+       this.imdoneButtonClick1 = function () {
         var paymentPagePO = new paymentPageObj();
         var productDetailsPO = new productDetailsObj();
         var browsePO = new browseObj();
@@ -833,7 +799,7 @@ let paymentPage = function () {
 
     }
 
-    this.removeImg = function () {
+    this.removeImg = function() {
         var paymentPagePO = new paymentPageObj();
         utilities.waitForElement(paymentPagePO.removeImg);
         utilities.scrollTo(paymentPagePO.removeImg);
@@ -841,27 +807,27 @@ let paymentPage = function () {
         paymentPagePO.removeImg.click();
     }
 
-    this.verifyStarCardImgField = function () {
+    this.verifyStarCardImgField = function() {
         var paymentPagePO = new paymentPageObj();
         expect(element(by.xpath("//ion-label[contains(text(),'Receipt Image')]")).isPresent());
         expect(paymentPagePO.removeImg.isPresent());
     }
 
-    this.verifyStarCardDetails = function (card, date, authCode, amount) {
+    this.verifyStarCardDetails = function(card,date,authCode,amount) {
         var paymentPagePO = new paymentPageObj();
         utilities.scrollTo(paymentPagePO.starCardNumber);
         expect(paymentPagePO.starCardNumber.getAttribute('value')).toEqual(card);
         expect(paymentPagePO.authorizationDate.getAttribute('value')).toEqual(date);
         expect(paymentPagePO.authorizationCode.getAttribute('value')).toEqual(authCode);
-        expect(paymentPagePO.authorizationAmount.getAttribute('value')).toEqual(amount + '.00');
-
+        expect(paymentPagePO.authorizationAmount.getAttribute('value')).toEqual(amount+'.00');
+        
     }
 
     /*
      *  Tax Exempt field reusables
      */
 
-    this.verifyTaxExemptFields = function () {
+    this.verifyTaxExemptFields = function() {
         var paymentPagePO = new paymentPageObj();
         expect(paymentPagePO.taxImage1.isPresent());
         expect(paymentPagePO.taxImage2.isPresent());
@@ -874,7 +840,7 @@ let paymentPage = function () {
         // var remote = require('../node_modules/protractor/node_modules/selenium-webdriver/remote');
         // browser.setFileDetector(new remote.FileDetector());
         var paymentPagePO = new paymentPageObj();
-        // var fileElem = element(by.css('input[type="file"]'));
+       // var fileElem = element(by.css('input[type="file"]'));
         var abspath = path.resolve(__dirname, "../com.sirius.library/img.png")
 
         utilities.waitForElement(paymentPagePO.taxImage1);
@@ -885,7 +851,7 @@ let paymentPage = function () {
 
     }
 
-    this.removeTaxImg = function () {
+    this.removeTaxImg = function() {
         var paymentPagePO = new paymentPageObj();
         utilities.waitForElement(paymentPagePO.taxImageRem1);
         utilities.scrollTo(paymentPagePO.taxImageRem1);
@@ -898,15 +864,15 @@ let paymentPage = function () {
         utilities.HighlightElement(paymentPagePO.taxImageRem2);
     }
 
-    this.selectYourCommission = function () {
+    this.selectYourCommission = function() {
         var paymentPagePO = new paymentPageObj();
         utilities.waitForElement(paymentPagePO.yourCommission);
         utilities.scrollTo(paymentPagePO.yourCommission);
         utilities.HighlightElement(paymentPagePO.yourCommission);
         paymentPagePO.yourCommission.click();
-    }
+    } 
 
-    this.SignAuthorize = function () {
+    this.SignAuthorize = function() {
         var paymentPagePO = new paymentPageObj();
         utilities.HighlightElement(paymentPagePO.signature);
         paymentPagePO.signature.click();
@@ -914,8 +880,8 @@ let paymentPage = function () {
         utilities.waitForElement(paymentPagePO.signPad);
         utilities.scrollTo(paymentPagePO.signPad);
         utilities.HighlightElement(paymentPagePO.signPad);
-        browser.actions().mouseMove(paymentPagePO.signPad).mouseDown().mouseMove(paymentPagePO.signPad, { x: 5, y: 5 }).mouseMove(paymentPagePO.signPad, { x: 2, y: 2 }).mouseUp().perform();
-
+        browser.actions().mouseMove(paymentPagePO.signPad).mouseDown().mouseMove(paymentPagePO.signPad,  {x: 5, y: 5}).mouseMove(paymentPagePO.signPad,  {x: 2, y: 2}).mouseUp().perform();
+        
         utilities.HighlightElement(paymentPagePO.authorizeCheckBox);
         paymentPagePO.authorizeCheckBox.click();
 

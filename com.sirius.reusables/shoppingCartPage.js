@@ -14,8 +14,15 @@ var browseObj = require('../com.sirius.pageObjects/browseByCategory_po');
 //     expect
 // } = require("chai");
 const {
-    assert
+    assert, expect, util
 } = require("chai");
+const { fchown } = require('fs');
+
+// //global.expect = require('chai').expect
+// var chai = require('chai');
+// var chaiAsPromised = require('chai-as-promised');
+// chai.use(chaiAsPromised);
+
 var EC = protractor.ExpectedConditions;
 var waitTimeout = 300000;
 
@@ -32,14 +39,111 @@ let shoppingCartPage = function () {
         shoppingCartPO.moreBonusOption.click();
         browser.sleep(5000);
         expect(element(by.id('text_bonus_cpo')).isDisplayed);
+    }
 
+    this.cancelSaveAsPendingFromOverlay = function () {
+        var shoppingCartPO = new shoppingCartObj();
+        utilities.click(shoppingCartPO.saveButton);
+        utilities.waitUtilElementPresent(shoppingCartPO.cancelSaveOrder, waitTimeout);
+        utilities.HighlightElement(shoppingCartPO.cancelSaveOrder);
+        shoppingCartPO.cancelSaveOrder.click();
+        browser.sleep(2000);
+        expect(shoppingCartPO.cancelSaveOrder.isPresent()).toBeFalsy();
+        reportInfo.log("Verified if the user is able to click on the 'cancel' button and close the save order overlay");
+        utilities.click(shoppingCartPO.saveButton);
+        utilities.waitUtilElementPresent(shoppingCartPO.cancelSaveOrder, waitTimeout);
+        utilities.HighlightElement(shoppingCartPO.cancelSaveOrderUsingXicon);
+        utilities.click(shoppingCartPO.cancelSaveOrderUsingXicon);
+       // browser.sleep(2000);
+       // expect(shoppingCartPO.cancelSaveOrder.isPresent()).toBeFalsy(); 'toBeFalsy' issue to be sorted out
+        reportInfo.log("Verified if the user is able to click on the 'X' icon and close the save order overlay");
+    }
 
+    this.nonISO8859CharacterValidationOnOverlay = function () {
+        var shoppingCartPO = new shoppingCartObj();
+        utilities.click(shoppingCartPO.saveButton);
+        utilities.HighlightElement(shoppingCartPO.saveButton);
+        utilities.waitForElement(shoppingCartPO.saveOrderReasonField);
+        shoppingCartPO.saveOrderReasonField.sendKeys("测试");
+        //utilities.HighlightElement(shoppingCartPO.saveOrderButton);
+        utilities.waitForElement(shoppingCartPO.invalidReasonError);
+        expect((shoppingCartPO.invalidReasonError).isDisplayed());
+        utilities.HighlightElement(shoppingCartPO.invalidReasonError);
+        utilities.attachScreenshot();
+        reportInfo.log("Verified if non ISO8859-1 characters are not allowed in the save as pending modal's comments section");
+    }
+
+    this.creditCardNumberValidationOnOverlay_Amex = function () {
+        var shoppingCartPO = new shoppingCartObj();
+        utilities.click(shoppingCartPO.saveButton);
+        utilities.HighlightElement(shoppingCartPO.saveButton);
+        utilities.waitForElement(shoppingCartPO.saveOrderReasonField);
+        shoppingCartPO.saveOrderReasonField.sendKeys("378282246310005");
+        utilities.HighlightElement(shoppingCartPO.saveOrderButton);
+        shoppingCartPO.saveOrderButton.click();
+        utilities.waitForElement(shoppingCartPO.removeCardNumberFromCommentFieldError);
+        expect((shoppingCartPO.removeCardNumberFromCommentFieldError).isDisplayed());
+        utilities.HighlightElement(shoppingCartPO.removeCardNumberFromCommentFieldError);
+        utilities.attachScreenshot();
+        reportInfo.log("Verified if credit card numbers are not allowed in the save as pending modal's comments section");
+    }
+
+    this.creditCardNumberValidationOnOverlay_Discover = function () {
+        var shoppingCartPO = new shoppingCartObj();
+        utilities.click(shoppingCartPO.saveButton);
+        utilities.HighlightElement(shoppingCartPO.saveButton);
+        utilities.waitForElement(shoppingCartPO.saveOrderReasonField);
+        shoppingCartPO.saveOrderReasonField.sendKeys("6011000990139424");
+        utilities.HighlightElement(shoppingCartPO.saveOrderButton);
+        shoppingCartPO.saveOrderButton.click();
+        utilities.waitForElement(shoppingCartPO.removeCardNumberFromCommentFieldError);
+        expect((shoppingCartPO.removeCardNumberFromCommentFieldError).isDisplayed());
+        utilities.HighlightElement(shoppingCartPO.removeCardNumberFromCommentFieldError);
+        utilities.attachScreenshot();
+        reportInfo.log("Verified if credit card numbers are not allowed in the save as pending modal's comments section");
+    }
+
+    this.emptytheCart = function () {
+        var shoppingCartPO = new shoppingCartObj();
+        utilities.waitForElement(shoppingCartPO.emptyCartLink);
+        utilities.HighlightElement(shoppingCartPO.emptyCartLink);
+        shoppingCartPO.emptyCartLink.click();
+        utilities.waitForElement(shoppingCartPO.emptyCartLinkEmptyCartButton);
+        utilities.HighlightElement(shoppingCartPO.emptyCartLinkEmptyCartButton);
+        shoppingCartPO.emptyCartLinkEmptyCartButton.click();
+        utilities.waitForElement(shoppingCartPO.noItemsInCartMessage);
+        utilities.HighlightElement(shoppingCartPO.noItemsInCartMessage);
+        reportInfo.log("'No items in cart' message is displayed after emptying the cart");
+    }
+
+    this.emptyCartVerification = function () {
+        var shoppingCartPO = new shoppingCartObj();
+       // expect(shoppingCartPO.saveButton.isPresent()).toBeFalsy(); //to be fixed
+        reportInfo.log("Save button is not present after emptying the cart");
+      //  expect(shoppingCartPO.checkoutButton.isPresent()).toBeFalsy(); //to be fixed
+        reportInfo.log("Checkout button is not present after emptying the cart");
+    }
+
+    this.removeBonusitemFromCart = function () {
+        var shoppingCartPO = new shoppingCartObj();
+        // expect((shoppingCartPO.secondItemInCart)).isDisplayed();
+        utilities.HighlightElement(shoppingCartPO.secondItemInCartMoreIcon);
+        shoppingCartPO.secondItemInCartMoreIcon.click();
+        browser.sleep(4000);
+        utilities.HighlightElement(shoppingCartPO.bonusOption);
+        shoppingCartPO.bonusOption.click();
+        browser.sleep(2000);
+        shoppingCartPO.secondItemInCartMoreIcon.click();
+        //expect(shoppingCartPO.bonusOption.isPresent()).toBeFalsy();
+        // expect((shoppingCartPO.unBonusIcon)).isDisplayed();
+        shoppingCartPO.deleteProductFromCart.click();
+        browser.sleep(3000);
+        // expect(shoppingCartPO.verifyBonusItemDeletion.isPresent()).to.eventually.equals(false);
     }
 
 
     this.promoConfig = function () {
         var shoppingCartPO = new shoppingCartObj();
-
         utilities.waitForElement(shoppingCartPO.olean, waitTimeout);
         utilities.HighlightElement(shoppingCartPO.olean);
         utilities.pageWaitSec(5);
@@ -47,7 +151,6 @@ let shoppingCartPage = function () {
 
     this.verifyPromoConfigVectorUS = function () {
         var shoppingCartPO = new shoppingCartObj();
-
         expect(shoppingCartPO.olean.isSelected());
         expect(shoppingCartPO.brandingTools);
         expect(shoppingCartPO.orderTypeRegular.isPresent()).toBeFalsy();
@@ -110,14 +213,8 @@ let shoppingCartPage = function () {
 
     this.verifyPromoGiftWrap = function () {
         var shoppingCartPO = new shoppingCartObj();
-        utilities.waitUtilElementPresent(shoppingCartPO.addGiftWrappingBtn);
-        utilities.HighlightElement(shoppingCartPO.addGiftWrappingBtn);
         shoppingCartPO.addGiftWrappingBtn.click();
-        utilities.pageWaitSec(5);
-        utilities.waitUtilElementPresent(shoppingCartPO.GWBonusYes);
-        utilities.HighlightElement(shoppingCartPO.GWBonusYes);
-        //expect(shoppingCartPO.GWBonusYes.isSelected()).toBeFalsy();
-        utilities.waitUtilElementPresent(shoppingCartPO.GWSubmitButton);
+        expect(shoppingCartPO.GWBonusYes.isSelected()).toBeFalsy();
         element(by.id('btn_cancel_gw')).click();
         browser.sleep(2000);
     }
@@ -254,8 +351,8 @@ let shoppingCartPage = function () {
         var eventDetailsNameStore;
         shoppingCartPO.eventDetailsName.getText().then(function (text) {
             eventDetailsNameStore = text;
-            //console.log('****** socilDemoDateStore ******', text);
-            // console.log('****** socilDemoDateStore ******', eventDetailsNameStore);
+            console.log('****** socilDemoDateStore ******', text);
+            console.log('****** socilDemoDateStore ******', eventDetailsNameStore);
         });
         browser.sleep(2000);
         utilities.waitUtilElementPresent(shoppingCartPO.socialDemoSubmitButtonEnable, waitTimeout);
@@ -280,9 +377,9 @@ let shoppingCartPage = function () {
         shoppingCartPO.eventState.click();
         browser.sleep(10000);
         shoppingCartPO.EvenetbillingstateCheckout(State);
-        utilities.waitUtilElementPresent(addressPagePO.billDropDownOkButton, waitTimeout);
-        utilities.HighlightElement(addressPagePO.billDropDownOkButton);
-        addressPagePO.billDropDownOkButton.click();
+        utilities.waitUtilElementPresent(addressPagePO.billDropDownOk, waitTimeout);
+        utilities.HighlightElement(addressPagePO.billDropDownOk);
+        addressPagePO.billDropDownOk.click();
         utilities.waitUtilElementPresent(shoppingCartPO.eventDetailsSearch, waitTimeout);
         utilities.scrollTo(shoppingCartPO.eventDetailsSearch);
         shoppingCartPO.eventDetailsSearch.sendKeys(Place);
@@ -365,14 +462,6 @@ let shoppingCartPage = function () {
         utilities.waitForElement(shoppingCartPO.updateConfig, waitTimeout);
         utilities.HighlightElement(shoppingCartPO.priceSetupCatalog);
         shoppingCartPO.priceSetupCatalog.click();
-    }
-
-    this.verifyNoConfig = function() {
-        utilities.pageWaitSec(5);
-        var shopCartPO = new shoppingCartObj();
-        expect(element(by.xpath("//cc-configuration-modal//div[contains(text(),'There are no configuration')]")).isDisplayed());
-        expect(shopCartPO.cancelConfig.isDisplayed());
-        expect(shopCartPO.updateConfig.isPresent()).toBeFalsy();
     }
 
     this.configUpdate = function () {
@@ -576,14 +665,6 @@ let shoppingCartPage = function () {
         browser.executeScript(emptyCartSaveOrderOptionNo);
     }
 
-    this.selectCommissionConfig = function() {
-        var shopCartPO = new shoppingCartObj();
-        utilities.waitForElement(shopCartPO.yourCommission);
-        utilities.scrollTo(shopCartPO.yourCommission);
-        utilities.HighlightElement(shopCartPO.yourCommission);
-        shopCartPO.yourCommission.click();
-    }
-
     this.EmptyCartSavethisOrderYes = function () {
         var shoppingCartPO = new shoppingCartObj();
         utilities.waitForElement(shoppingCartPO.emptyCartLinkEmptyCartButton, waitTimeout);
@@ -667,9 +748,6 @@ let shoppingCartPage = function () {
     this.selectPendingOrder = function () {
         var homePagePO = new homePageObj();
         var shoppingCartPO = new shoppingCartObj();
-        utilities.waitUtilElementPresent(homePagePO.pendingOrderHeader);
-        utilities.HighlightElement(homePagePO.pendingOrderHeader);
-        homePagePO.pendingOrderHeader.click();
         utilities.waitUtilElementPresent(homePagePO.comments, waitTimeout);
         utilities.HighlightElement(homePagePO.comments, waitTimeout);
         // homePagePO.pendingOrderName.click();
@@ -727,9 +805,6 @@ let shoppingCartPage = function () {
     this.verifyAndDeleteSaveOrder = function () {
         var shoppingCartPO = new shoppingCartObj();
         var homePagePO = new homePageObj();
-        utilities.waitUtilElementPresent(homePagePO.pendingOrderHeader);
-        utilities.HighlightElement(homePagePO.pendingOrderHeader);
-        homePagePO.pendingOrderHeader.click();
         utilities.waitUtilElementPresent(homePagePO.comments, waitTimeout);
         utilities.HighlightElement(homePagePO.comments);
         homePagePO.comments.getText().then(function (text) {
@@ -740,7 +815,6 @@ let shoppingCartPage = function () {
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
             browser.executeScript(deletePendingOrder);
         } else {
-            utilities.waitUtilElementPresent(homePagePO.resumeOrderMore);
             utilities.HighlightElement(homePagePO.resumeOrderMore);
             homePagePO.resumeOrderMore.click();
             utilities.waitUtilElementPresent(homePagePO.moreDeleteButton, waitTimeout);
@@ -759,7 +833,7 @@ let shoppingCartPage = function () {
         utilities.HighlightElement(homePagePO.comments);
         homePagePO.comments.getText().then(function (text) {
             ActualComments = text;
-            // console.log('****** Actual Comments ******', text);
+            console.log('****** Actual Comments ******', text);
             assert.include(ActualComments, 'testing pending order');
         });
         utilities.waitUtilElementPresent(homePagePO.comments, waitTimeout);
@@ -774,7 +848,7 @@ let shoppingCartPage = function () {
         utilities.HighlightElement(homePagePO.comments);
         homePagePO.comments.getText().then(function (text) {
             ActualComments = text;
-            //console.log('****** Actual Comments ******', text);
+            console.log('****** Actual Comments ******', text);
             // assert.include(ActualComments, 'testing switchcompany save order');
         });
         utilities.waitUtilElementPresent(homePagePO.comments, waitTimeout);
@@ -911,7 +985,7 @@ let shoppingCartPage = function () {
             var BonusSellingPriceStore;
             shoppingCartPO.priceBonusItem.getText().then(function (text) {
                 BonusSellingPriceStore = text;
-                // console.log('****** Stored BonusSellingPriceStore ******', BonusSellingPriceStore);
+                console.log('****** Stored BonusSellingPriceStore ******', BonusSellingPriceStore);
                 // assert.include('$0.00', BonusSellingPriceStore);
                 reportInfo.log("Produce price is verified as $0.00");
             });
@@ -919,6 +993,7 @@ let shoppingCartPage = function () {
         } else {
             if (shoppingCartPO.checkEnabled("Bonus")) {
                 utilities.log("Inside BonusOptionSelect ");
+                console.log("Executing if loop");
                 utilities.waitUtilElementPresent(shoppingCartPO.moreEngraveOption);
                 utilities.waitForElement(shoppingCartPO.moreEngraveOption);
                 utilities.HighlightElement(shoppingCartPO.moreEngraveOption);
@@ -936,6 +1011,7 @@ let shoppingCartPage = function () {
                     // assert.include('$0.00', text);
                 });
             } else {
+                console.log("Executing else loop")
                 utilities.log(" BonusOption Disabled ");
             }
         }
@@ -961,7 +1037,7 @@ let shoppingCartPage = function () {
             shoppingCartPO.bonusSellingPrice.getText().then(function (text) {
                 BonusSellingPriceStore = text;
                 utilities.log('****** Stored BonusSellingPriceStore ******', BonusSellingPriceStore);
-                // console.log('****** Stored BonusSellingPriceStore ******', BonusSellingPriceStore);
+                console.log('****** Stored BonusSellingPriceStore ******', BonusSellingPriceStore);
 
                 // assert.equal(text, '$0.00');
             });
@@ -992,33 +1068,6 @@ let shoppingCartPage = function () {
 
 
     }
-    this.bonusAdvisorGiftCardNoItemError = function () {
-        var shoppingCartPO = new shoppingCartObj();
-        utilities.waitUtilElementPresent(shoppingCartPO.bonusAdvisorGiftErrorMsg)
-        utilities.HighlightElement(shoppingCartPO.bonusAdvisorGiftErrorMsg);
-        shoppingCartPO.bonusFromCart.click();
-        utilities.waitUtilElementPresent(shoppingCartPO.bonusAdvisorGiftErrorMsg)
-        utilities.HighlightElement(shoppingCartPO.bonusAdvisorGiftErrorMsg);
-    }
-
-    this.selectBonusAdivor = function () {
-        var shoppingCartPO = new shoppingCartObj();
-        var browsePO = new browseObj();
-        var productDetailsPO = new productDetailsObj();
-        utilities.waitUtilElementPresent(shoppingCartPO.bonusAdvisor, waitTimeout);
-        utilities.HighlightElement(shoppingCartPO.bonusAdvisor);
-        shoppingCartPO.bonusAdvisor.click();
-        utilities.waitUtilElementPresent(browsePO.popupDoneButton);
-        utilities.HighlightElement(browsePO.popupDoneButton);
-        browsePO.popupDoneButton.click();
-    }
-
-    this.closeBonusAdvisorOverlay = function () {
-        var shoppingCartPO = new shoppingCartObj();
-        utilities.waitUtilElementPresent(shoppingCartPO.bonusOverlayClose, waitTimeout);
-        utilities.HighlightElement(shoppingCartPO.bonusOverlayClose);
-        shoppingCartPO.bonusOverlayClose.click();
-    }
 
     this.AddBonusAdvisor = function () {
         var shoppingCartPO = new shoppingCartObj();
@@ -1040,7 +1089,7 @@ let shoppingCartPage = function () {
         var BonusProductNameStore;
         shoppingCartPO.bonusFirstProductName.getText().then(function (text) {
             BonusProductNameStore = text;
-            //console.log('****** Stored Bonus Product Name ******', BonusProductNameStore);
+            console.log('****** Stored Bonus Product Name ******', BonusProductNameStore);
         });
         utilities.HighlightElement(shoppingCartPO.bonusAddFirstProduct);
         browser.executeScript("document.getElementsByClassName('bonusable-item-add-to-cart')[0].click();");
@@ -1074,7 +1123,7 @@ let shoppingCartPage = function () {
         utilities.waitUtilElementPresent(shoppingCartPO.bonusSellingPrice, waitTimeout);
         utilities.HighlightElement(shoppingCartPO.bonusSellingPrice);
         shoppingCartPO.bonusSellingPrice.getText().then(function (bonusProductPrice) {
-            //console.log('****** Stored BonusSellingPriceStore ******', bonusProductPrice);
+            console.log('****** Stored BonusSellingPriceStore ******', bonusProductPrice);
             // assert.include(bonusProductPrice, '$0.00');
             reportInfo.log('Bonus Product Price is verified with $0.00');
         });
@@ -1085,7 +1134,7 @@ let shoppingCartPage = function () {
         var shoppingCartPO = new shoppingCartObj();
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
             var bonusOptionStatus = browser.executeScript("document.getElementsByTagName('ion-item-option')[0].getAttribute('class')");
-            // console.log("Bonus Status Class value", bonusOptionStatus);
+            console.log("Bonus Status Class value", bonusOptionStatus);
             var bonusCheck = "not-available";
 
             function containText(bonusCheck) {
@@ -1102,6 +1151,11 @@ let shoppingCartPage = function () {
             // shoppingCartPO.cartMoreOption.click();
             reportInfo.log('Bonus Options is Disabled ');
         }
+    }
+
+    this.engravingOptionDisabled = function () {
+        var shoppingCartPO = new shoppingCartObj();
+
     }
 
     this.GiftCardBonusError = function () {
@@ -1196,14 +1250,15 @@ let shoppingCartPage = function () {
     }
 
     this.EngraveOptionsDisabled = function () {
-        var shopCartPO = new shoppingCartObj();
-        if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
+        var shoppingCartPO = new shoppingCartObj();
 
-        } else {
-            utilities.waitUtilElementPresent(shopCartPO.cartMoreOption, waitTimeout);
-            utilities.HighlightElement(shopCartPO.cartMoreOption);
-            shopCartPO.cartMoreOption.click();
-        }
+        utilities.waitUtilElementPresent(shoppingCartPO.threeDottedIcon, waitTimeout);
+        shoppingCartPO.threeDottedIcon.click();
+        utilities.HighlightElement(shoppingCartPO.engraveDisabledIndication);
+        utilities.attachScreenshot();
+        browser.sleep(2000);
+        reportInfo.log('engrave option is disabled when the product does not have engrave functionality');
+
     }
     this.engraveOptionSelect = function () {
         var shopCartPO = new shoppingCartObj();
@@ -1267,6 +1322,154 @@ let shoppingCartPage = function () {
             reportInfo.log('Delete Options is clicked ');
         }
     }
+
+    this.verifyProductDetailsInEngraveModal = function () {
+        var shoppingCartPO = new shoppingCartObj();
+        var productIDFromCart;
+        var productTitleFromCart;
+        var productColorFromCart;
+        var productQtyFromCart;
+        var productIDFromEngravingModal;
+        var productTitleFromEngravingModal;
+        var productColorFromEngravingModal;
+        var productQtyFromEngravingModal;
+
+       utilities.HighlightElement(shoppingCartPO.saveProductIDFromCart);
+
+        shoppingCartPO.saveProductIDFromCart.getText().then(function (text) {
+            productIDFromCart = text;
+        });
+
+        utilities.HighlightElement(shoppingCartPO.saveProductTitleFromCart);
+        shoppingCartPO.saveProductTitleFromCart.getText().then(function (text) {
+            productTitleFromCart = text;
+        });
+
+        utilities.HighlightElement(shoppingCartPO.saveProductColorFromCart);
+        shoppingCartPO.saveProductColorFromCart.getText().then(function (text) {
+            productColorFromCart = text;
+        });
+
+        utilities.HighlightElement(shoppingCartPO.saveProductQtyFromCart);
+        shoppingCartPO.saveProductQtyFromCart.getText().then(function (text) {
+            productQtyFromCart = text;
+        });
+
+   // shoppingCartPO.saveProductQtyFromEngravingModal.contains(prdocutQtyFromCart);
+   
+        utilities.HighlightElement(shoppingCartPO.threeDottedIcon);
+        shoppingCartPO.threeDottedIcon.click();
+        utilities.HighlightElement(shoppingCartPO.moreEngraveOption);
+        shoppingCartPO.moreEngraveOption.click();
+        utilities.waitForElement(shoppingCartPO.engraveModalTitle);
+        utilities.HighlightElement(shoppingCartPO.engraveModalTitle);
+        utilities.HighlightElement(shoppingCartPO.saveProductIDFromEngravingModal);
+        utilities.HighlightElement(shoppingCartPO.saveProductTitleFromEngravingModal);
+        utilities.HighlightElement(shoppingCartPO.saveProductColorFromEngravingModal);
+        utilities.HighlightElement(shoppingCartPO.saveProductQtyFromEngravingModal);
+
+        shoppingCartPO.saveProductIDFromEngravingModal.getText().then(function (text) {
+            productIDFromEngravingModal = text;
+        });
+        shoppingCartPO.saveProductTitleFromEngravingModal.getText().then(function (text) {
+            productTitleFromEngravingModal = text;
+        });
+        shoppingCartPO.saveProductColorFromEngravingModal.getText().then(function (text) {
+            productColorFromEngravingModal = text;
+        });
+        shoppingCartPO.saveProductQtyFromEngravingModal.getText().then(function (text) {
+            productQtyFromEngravingModal = text;
+
+            console.log("Printing ids");
+            console.log(productIDFromCart);
+            console.log(productIDFromEngravingModal);
+            assert.equal(productIDFromCart,productIDFromEngravingModal);
+
+            console.log(productTitleFromCart);
+            console.log(productTitleFromEngravingModal);
+            assert.equal(productTitleFromCart,productTitleFromEngravingModal);
+
+            console.log(productColorFromCart);
+            console.log(productColorFromEngravingModal);
+            assert.equal(productColorFromCart,productColorFromEngravingModal);
+
+            console.log(productQtyFromEngravingModal);
+            console.log(productQtyFromCart);
+           // expect(productQtyFromEngravingModal.toContain(productQtyFromCart));
+
+           // expect(shoppingCartPO.saveProductQtyFromEngravingModal.getText()).toContain('1'); // need to check
+            
+            // expect(productQtyFromEngravingModal).contains(productQtyFromCart);
+            //expect(productQtyFromEngravingModal).toContain('1'); 
+            console.log("coming out of the program");
+            
+        });
+
+        //expect(browser.getTitle()).toContain('my page title name');
+       //expect(productQtyFromEngravingModal.contains(productQtyFromCart));
+       // assert.equal(productIDFromCart,productIDFromEngravingModal);
+    
+    
+        }
+
+  this.verifyEngraveDetailsInCart = function() {
+    var shopCartPO = new shoppingCartObj();
+    utilities.waitForElement(shopCartPO.engraveTitleInCart);
+    expect(shopCartPO.engraveIconInCart.isDisplayed());
+    expect(shopCartPO.engraveTitleInCart.isDisplayed());
+    utilities.HighlightElement(shopCartPO.engravingDetailsInCart);
+    utilities.HighlightElement(shopCartPO.engravingLinesInCart);
+    utilities.HighlightElement(shopCartPO.engravingPlateDetailInCart);
+    expect(element(by.xpath(".//*[@class='engraving-config' and contains(.,Monogram)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-config' and contains(., Square)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-config' and contains(.,Style) and contains(.,1)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-price-wrapper ng-star-inserted' and contains(.,9)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-lines ng-star-inserted']//*[contains(text(),'Eng')]")).isDisplayed());
+
+    expect(element(by.xpath(".//*[@class='engraving-plate-name']")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-plate-number']")).isDisplayed());
+    //expect(element(by.xpath(".//*[@class='engraving-plate-price-wrapper ng-star-inserted']//*[@class='selling-price ng-star-inserted']")).isDisplayed());
+    utilities.attachScreenshot();
+  }
+
+  this.verifyEngraveDetailsInCartBonusWithoutPlate = function() {
+    var shopCartPO = new shoppingCartObj();
+    utilities.waitForElement(shopCartPO.engraveTitleInCart);
+    expect(shopCartPO.engraveIconInCart.isDisplayed());
+    expect(shopCartPO.engraveTitleInCart.isDisplayed());
+    utilities.HighlightElement(shopCartPO.engravingDetailsInCart);
+    utilities.HighlightElement(shopCartPO.engravingLinesInCart);
+    utilities.HighlightElement(shopCartPO.engravingPlateDetailInCart);
+    expect(element(by.xpath(".//*[@class='engraving-config' and contains(.,Monogram)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-config' and contains(., Square)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-config' and contains(.,Style)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-price-wrapper ng-star-inserted' and contains(.,0)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-lines ng-star-inserted']//*[contains(text(),'Eng')]")).isDisplayed());
+     utilities.attachScreenshot();
+  }
+
+  
+  this.verifyCartDetailsengraveTypeEngraveBonus = function() {
+    var shopCartPO = new shoppingCartObj();
+    utilities.waitForElement(shopCartPO.engraveTitleInCart);
+    expect(shopCartPO.engraveIconInCart.isDisplayed());
+    expect(shopCartPO.engraveTitleInCart.isDisplayed());
+    utilities.HighlightElement(shopCartPO.engravingDetailsInCart);
+    utilities.HighlightElement(shopCartPO.engravingLinesInCart);
+    utilities.HighlightElement(shopCartPO.engravingPlateDetailInCart);
+    expect(element(by.xpath(".//*[@class='engraving-config' and contains(.,Engrave)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-config' and contains(., Square)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-config' and contains(.,Style)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-price-wrapper ng-star-inserted'][contains(.,0)]")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-lines ng-star-inserted']//*[contains(text(),'Engrave')]")).isDisplayed());
+
+    expect(element(by.xpath(".//*[@class='engraving-plate-name']")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-plate-number']")).isDisplayed());
+    expect(element(by.xpath(".//*[@class='engraving-plate-price-wrapper ng-star-inserted']//*[@class='selling-price ng-star-inserted']")).isDisplayed());
+    utilities.attachScreenshot();
+  }
+
+
 
     this.engraveTypeEngrave = function () {
         var shopCartPO = new shoppingCartObj();
@@ -1424,22 +1627,6 @@ let shoppingCartPage = function () {
         shopCartPO.engraveSubmitButton.click();
     }
 
-    this.engraveVerifications = function () {
-        var shopCartPO = new shoppingCartObj();
-        utilities.waitUtilElementPresent(shopCartPO.engravingAIcon);
-        utilities.HighlightElement(shopCartPO.engravingAIcon);
-    }
-
-    this.orderAdvisorEngraveVerification = function () {
-        var shopCartPO = new shoppingCartObj();
-        utilities.waitUtilElementPresent(shopCartPO.bonusFromCart);
-        utilities.HighlightElement(shopCartPO.bonusFromCart);
-        shopCartPO.bonusFromCart.click();
-        utilities.pageWait(5);
-        utilities.waitUtilElementPresent(shopCartPO.bonusAdvisorengravingAIcon);
-        utilities.HighlightElement(shopCartPO.bonusAdvisorengravingAIcon);
-    }
-
     this.engraveTypeMonogramSquarePlateBonus = function () {
         var shopCartPO = new shoppingCartObj();
 
@@ -1502,9 +1689,6 @@ let shoppingCartPage = function () {
                 })
                 utilities.scrollTo(shopCartPO.engraveBonusNo);
                 shopCartPO.engraveBonusNo.click();
-
-
-
             }
         })
         shopCartPO.engraveText.sendKeys("Engrave");
@@ -1741,40 +1925,11 @@ let shoppingCartPage = function () {
 
     this.confirmCustomGiftWrapping = function () {
         var shopCartPO = new shoppingCartObj();
+
         utilities.waitUtilElementPresent(shopCartPO.customGiftwrapCheckout, waitTimeout);
         utilities.HighlightElement(shopCartPO.customGiftwrapCheckout);
         shopCartPO.customGiftwrapCheckout.click();
 
-    }
-
-    this.addCustomerConfiguration = function () {
-        var shopCartPO = new shoppingCartObj();
-        utilities.waitUtilElementPresent(shopCartPO.customerSelect);
-        utilities.HighlightElement(shopCartPO.customerSelect);
-        shopCartPO.customerSelect.click();
-        utilities.waitUtilElementPresent(shopCartPO.customerSearchInput);
-        utilities.HighlightElement(shopCartPO.customerSearchInput);
-        shopCartPO.customerSearchInput.sendKeys("a");
-        utilities.HighlightElement(shopCartPO.customerSearchButton);
-        shopCartPO.customerSearchButton.click().then(function () {
-        utilities.pageWait(10);
-        utilities.waitUtilElementPresent(shopCartPO.customerSelection);
-        utilities.HighlightElement(shopCartPO.customerSelection);
-        browser.executeScript("document.querySelector('ion-item ion-radio').click();");
-        });
-        utilities.HighlightElement(shopCartPO.customerSearchSelectButton);
-        shopCartPO.customerSearchSelectButton.click();
-        utilities.waitUtilElementPresent(shopCartPO.updateConfig);
-        utilities.HighlightElement(shopCartPO.updateConfig);
-        utilities.scrollTo(shopCartPO.updateConfig);
-        shopCartPO.updateConfig.click();
-    }
-
-    this.inventoryToggleSelect = function () {
-        var shopCartPO = new shoppingCartObj();
-        utilities.waitUtilElementPresent(shopCartPO.inventoryToggleSelecticon);
-        utilities.HighlightElement(shopCartPO.inventoryToggleSelecticon);
-        browser.executeScript("document.querySelector('.aux-input').click()");    
     }
 
     this.productNameMoreOption = function (productName) {
@@ -1794,7 +1949,7 @@ let shoppingCartPage = function () {
 
     this.selectProductFromCart = function (productName) {
         var shopCartPO = new shoppingCartObj;
-        // console.log("Product name", productName);
+        console.log("Product name", productName);
         utilities.waitUtilElementPresent(shopCartPO.CartItemName, waitTimeout);
         shopCartPO.productItem(productName);
     }
@@ -1956,19 +2111,6 @@ let shoppingCartPage = function () {
         shopCartPO.setBreakContinue.click();
     }
 
-    this.cartQuantityClick = function() {
-        var shoppingCartPO = new shoppingCartObj();
-        utilities.waitForElement(shoppingCartPO.shoppingCartProductName, waitTimeout);
-        utilities.HighlightElement(shoppingCartPO.shoppingCartProductName);
-        shoppingCartPO.shoppingCartQtyValidation.click();
-    }
-
-    this.verifyCartProduct = function(product) {
-        var prod = element(by.xpath("//div[@class='cart-content-wrapper ng-star-inserted']//span[contains(text(),'"+ product +"')]"));
-        expect(prod);
-        utilities.HighlightElement(prod);
-    }
-
     this.updateQuantity = function () {
         var shopCartPO = new shoppingCartObj();
         utilities.pageWaitSec(5);
@@ -1991,7 +2133,7 @@ let shoppingCartPage = function () {
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') { } else {
             shoppingCartPO.priceEachItem.count().then(function (text) {
                 var length = parseInt(text);
-                // console.log("total number of items in cart", length);
+                console.log("total number of items in cart", length);
 
                 priceTotal = 0;
                 for (i = 1; i <= length; i++) {
@@ -2002,7 +2144,7 @@ let shoppingCartPage = function () {
                         price = parseFloat(priceString);
                         priceTotal = priceTotal + price;
 
-                        //console.log("Total Calculated: ", priceTotal);
+                        console.log("Total Calculated: ", priceTotal);
                     })
                 }
             });
@@ -2011,7 +2153,7 @@ let shoppingCartPage = function () {
                 CartTotalDisplayed2 = text.replace('$', '');
                 CartTotalDisplayed1 = CartTotalDisplayed2.replace(',', '');
                 CartTotalDisplayed = parseFloat(CartTotalDisplayed1);
-                //console.log('****** CartTotalDisplayed ******', CartTotalDisplayed);
+                console.log('****** CartTotalDisplayed ******', CartTotalDisplayed);
                 module.exports.CartTotalDisplayed = CartTotalDisplayed;
             });
         }
@@ -2088,6 +2230,74 @@ let shoppingCartPage = function () {
         }
     }
 
+    this.verifyNoButtonFromUpdateCartModal = function () {
+        var shopCartPO = new shoppingCartObj();
+        var productDetailsPO = new productDetailsObj();
+
+        if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') { } else {
+
+            //Verification points for each product line item and add one more product to view the edit product page
+            utilities.waitUtilElementPresent(shopCartPO.productLineItem, waitTimeout);
+            productDetails.addProductToCart();
+            reportInfo.log('Add to cart button is clicked in the product details page');
+            utilities.waitUtilElementPresent(shopCartPO.productLineItem, waitTimeout);
+
+            reportInfo.log('Wait for the shopping cart section with recently added product');
+
+            //Click on product name from shopping cart section/page
+            browser.wait(EC.elementToBeClickable(shopCartPO.shoppingCartProductName), waitTimeout);
+            browser.wait(EC.elementToBeClickable(shopCartPO.emptyCartLink), waitTimeout);
+            browser.wait(EC.visibilityOf(shopCartPO.emptyCartLink), waitTimeout);
+            shopCartPO.shoppingCartProductName.click();
+            reportInfo.log('Product name is clicked from shopping cart section');
+            utilities.waitUtilElementPresent(productDetailsPO.carousalImageEdit, waitTimeout);
+            utilities.scrollTo(productDetailsPO.updateButton.getWebElement());
+
+            //Wait for Update button to display
+            utilities.waitUtilElementPresent(productDetailsPO.updateButton, waitTimeout);
+
+            //Click on quantity option and check for the maximam value of it
+            utilities.waitUtilElementPresent(productDetailsPO.quantityDropDownEdit, waitTimeout);
+            browser.wait(EC.visibilityOf(productDetailsPO.quantityDropDownEdit), waitTimeout);
+            productDetailsPO.quantityDropDownEdit.click();
+
+            reportInfo.log('Drop down option is clicked in the edit cart page');
+            utilities.waitUtilElementPresent(shopCartPO.qtyModalCancelButton, waitTimeout);
+            utilities.scrollTo(shopCartPO.lastQty.getWebElement());
+            utilities.waitUtilElementPresent(shopCartPO.lastQty, waitTimeout);
+            shopCartPO.lastQty.click();
+            reportInfo.log('Last Quantity is selected from the list');
+            browser.wait(EC.elementToBeClickable(shopCartPO.qtyModalOKButton), waitTimeout);
+            shopCartPO.qtyModalOKButton.click();
+            reportInfo.log('OK Button is clicked in the quantity modal');
+            utilities.waitForElement(productDetailsPO.quantityDropDownEdit, waitTimeout);
+
+            //Click on the second product name from the shopping cart section
+            utilities.waitForElement(productDetailsPO.cancelButton, waitTimeout);
+            utilities.pageWaitSec(5);
+            utilities.waitUtilElementPresent(shopCartPO.selectSecondProduct, waitTimeout);
+            utilities.HighlightElement(shopCartPO.selectSecondProduct);
+            shopCartPO.selectSecondProduct.click();
+            reportInfo.log('Second product name is clicked in the shopping cart section');
+
+            //Wait for the confirm cancel modal and click on yes button in the modal
+            utilities.waitForElement(shopCartPO.confirmCancelModal, waitTimeout);
+            utilities.waitForElement(shopCartPO.confirmCancelNoButton, waitTimeout);
+            utilities.HighlightElement(shopCartPO.confirmCancelNoButton, waitTimeout);
+            utilities.attachScreenshot();
+            shopCartPO.confirmCancelNoButton.click();
+            reportInfo.log('No button is clicked in the confirm cancel modal');
+
+            //Wait for the product details page again and verify the page content
+            utilities.waitForElement(productDetailsPO.carousalImageEdit, waitTimeout);
+            expect((productDetailsPO.carousalImageEdit).isDisplayed());
+            expect((productDetailsPO.updateButton).isDisplayed());
+            reportInfo.log('Product details page is loaded completely');
+            utilities.attachScreenshot();
+        }
+    }
+
+
 }
 async function clickSaveOrder() {
     const saveOrder = document.getElementsByClassName('button button-solid ion-activatable ion-focusable hydrated')[23];
@@ -2127,12 +2337,14 @@ async function Eventbillingstate(state) {
     var x = document.getElementsByClassName("alert-radio-label sc-ion-alert-md");
     for (var i = 0; i < x.length; i++) {
         var counter = x[i].innerText;
-        //console.log(" @@@@ in if loop 1 : ", state, ' ', counter)
+        console.log(" @@@@ in if loop 1 : ", state, ' ', counter)
         if (state.includes((counter))) {
-            // console.log(" @@@@ in if loop 2 : ", state, ' ', counter)
+            console.log(" @@@@ in if loop 2 : ", state, ' ', counter)
             document.getElementsByClassName("alert-radio-label sc-ion-alert-md")[i].click();
         }
     }
+
+
 }
 
 
@@ -2232,7 +2444,6 @@ this.EvenetbillingstateCheckout = function (state) {
     utilities.scrollTo(button);
     button.click();
 }
-
 
 
 

@@ -49,13 +49,13 @@ module.exports.attachScreenshot = attachScreenshot;
 
 
 let failureScreenshot = function () {
-  //console.log("gggggg", "failureScreenshot")
+  console.log("gggggg", "failureScreenshot")
   var spec = jasmine.getEnv().currentSpec;
-  //console.log("spec", spec);
+  console.log("spec", spec);
   var passed = jasmine.spec.results().passed();
-  //console.log("passed", passed);
+  console.log("passed", passed);
   if (!passed) {
-   // console.log("passed", "Suresh");
+    console.log("passed", "Suresh");
     browser.takeScreenshot().then(function (png) {
       allure.createAttachment('Screenshot', function () {
         return new Buffer(png, 'base64')
@@ -81,7 +81,7 @@ module.exports.pageWaitSec = pageWaitSec;
 
 let log = function (message) {
   browser.controlFlow().execute(function () {
-   // console.log(message);
+    console.log(message);
   });
 }
 module.exports.log = log;

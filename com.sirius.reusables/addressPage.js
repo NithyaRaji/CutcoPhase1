@@ -10,10 +10,13 @@ var addressPageObj = require('../com.sirius.pageObjects/addressesPage_po.js');
 var testInputs = require('../com.sirius.testData/data.json');
 var shippingPageObj = require('../com.sirius.pageObjects/shippingPage_po.js');
 var paymentPageObj = require('../com.sirius.pageObjects/paymentPage_po.js');
+const { assert } = require('console');
+const { expect } = require('chai');
 
 // const {
 //     expect
 // } = require("chai");
+
 // const {
 //     assert
 // } = require("chai");
@@ -35,6 +38,21 @@ let addressPage = function () {
         shoppingCartPO.saveOrderReasonField.sendKeys('save order with adjustments');
         utilities.HighlightElement(paymentPO.saveOrderOverlayButton);
         paymentPO.saveOrderOverlayButton.click();
+    }
+
+    this.basicCustomerSearchErrorValidation = function() {
+        var addressPagePO = new addressPageObj();
+        utilities.waitForElement(addressPagePO.searchCustomer);
+        utilities.HighlightElement(addressPagePO.searchCustomer);
+        addressPagePO.searchCustomer.click();
+        addressPagePO.customerSearchTextField.sendKeys('x1y2z3');
+        addressPagePO.customerSearchModalSearchButton.click();
+        utilities.waitUtilElementPresent(addressPagePO.customerSearchNoResult);
+        expect(addressPagePO.customerSearchNoResult).equals(' None of your existing customers match your search ');
+        utilities.HighlightElement(addressPagePO.customerSearchNoResult);
+        utilities.attachScreenshot();
+        reportInfo.log('Validated "Basic Customer Search" from S & B screen gives appropriate error message when valid LN is not available');
+
     }
 
     this.verifyStandardization = function () {
@@ -130,14 +148,15 @@ let addressPage = function () {
     this.billingAddressUS = function () {
         var addressPagePO = new addressPageObj();
        // utilities.waitUtilElementPresent(addressPagePO.customerType, waitTimeout);
+        utilities.waitForElement(addressPagePO.customerType, waitTimeout);
+        utilities.HighlightElement(addressPagePO.customerType);
+        utilities.attachScreenshot();
+        utilities.scrollTo(addressPagePO.customerType);
         utilities.pageWaitSec(10);
+        addressPagePO.customerType.click();
+        reportInfo.log("Customer Type is clicked in the addresses page");
+        utilities.pageWaitSec(5);
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-            if(browserDetails.executionName == 'iphone'){
-                browser.executeScript("document.getElementsByClassName('ionic-selectable-cover')[0].click();");
-            }
-            else {
-                addressPagePO.customerType.click();
-            }
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNewMobile, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNewMobile);
             addressPagePO.customerTypeNewMobile.click();
@@ -146,14 +165,9 @@ let addressPage = function () {
             addressPagePO.billDropDownOk.click();
         }
         else{
-            utilities.waitForElement(addressPagePO.customerType, waitTimeout);
-            utilities.HighlightElement(addressPagePO.customerType);
-            utilities.attachScreenshot();
-            addressPagePO.customerType.click();
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNew, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNew);
             addressPagePO.customerTypeNew.click();
-            reportInfo.log("Customer Type is clicked in the addresses page");
         }
         utilities.scrollTo(addressPagePO.billFirstName);
         utilities.pageWaitSec(5);
@@ -191,17 +205,16 @@ let addressPage = function () {
         var addressPagePO = new addressPageObj();
         var homePagePO = new homePageObj();
         var Address = testAddress;
-        utilities.pageWaitSec(10);
+        utilities.waitUtilElementPresent(addressPagePO.customerType, waitTimeout);
+        utilities.HighlightElement(addressPagePO.customerType);
+        addressPagePO.customerType.click();
+        reportInfo.log("Customer Type is clicked in the addresses page");
+        utilities.HighlightElement(addressPagePO.customerType);
+
         if (addressPagePO.provideEventDetailFirst.isPresent()) {
             browser.executeScript("document.getElementsByClassName('native-textarea')[0].value ='test';");
         }
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-            if(browserDetails.executionName == 'iphone'){
-                browser.executeScript("document.getElementsByClassName('ionic-selectable-cover')[0].click();");
-            }
-            else {
-                addressPagePO.customerType.click();
-            }
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNewMobile, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNewMobile);
             addressPagePO.customerTypeNewMobile.click();
@@ -210,11 +223,6 @@ let addressPage = function () {
             addressPagePO.billDropDownOk.click();
         }
         else{
-            utilities.waitUtilElementPresent(addressPagePO.customerType, waitTimeout);
-            utilities.HighlightElement(addressPagePO.customerType);
-             // addressPagePO.customerType.click();
-        reportInfo.log("Customer Type is clicked in the addresses page");
-        utilities.HighlightElement(addressPagePO.customerType);
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNew, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNew);
             addressPagePO.customerTypeNew.click();
@@ -252,15 +260,13 @@ let addressPage = function () {
 
     this.billingAddressCA = function () {
         var addressPagePO = new addressPageObj();
-     
+        utilities.waitForElement(addressPagePO.customerType, waitTimeout);
+        utilities.scrollTo(addressPagePO.customerType);
+        addressPagePO.customerType.click();
+        reportInfo.log("Customer Type is clicked in the addresses page");
+        utilities.pageWaitSec(5);
 
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-            if(browserDetails.executionName == 'iphone'){
-                browser.executeScript("document.getElementsByClassName('ionic-selectable-cover')[0].click();");
-            }
-            else {
-                addressPagePO.customerType.click();
-            }
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNewMobile, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNewMobile);
             addressPagePO.customerTypeNewMobile.click();
@@ -269,11 +275,6 @@ let addressPage = function () {
             addressPagePO.billDropDownOk.click();
         }
         else{
-            utilities.waitForElement(addressPagePO.customerType, waitTimeout);
-            utilities.scrollTo(addressPagePO.customerType);
-            addressPagePO.customerType.click();
-            reportInfo.log("Customer Type is clicked in the addresses page");
-            utilities.pageWaitSec(5);
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNew, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNew);
             addressPagePO.customerTypeNew.click();
@@ -326,16 +327,12 @@ let addressPage = function () {
         browser.sleep(2000);
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
             // utilities.mouseclick(addressPagePO.billStateDropDown); 
-           // browser.executeScript("document.getElementById('select_state').click();");
-           browser.executeScript("document.getElementsByClassName('ionic-selectable-cover')[2].click();");
-           browser.sleep(7000);
-           utilities.pageWait();
-           browser.executeScript("document.querySelector('ionic-selectable-modal ion-item:nth-child(3)').click();")
+            browser.executeScript("document.getElementById('select_state').click();");
             browser.sleep(7000);
             reportInfo.log("State value is selected from the dropdown in the billing address section");
             utilities.HighlightElement(addressPagePO.billDropDownOk);
             utilities.pageWaitSec(14);
-            //browser.executeScript("document.getElementsByClassName('alert-radio-label sc-ion-alert-md')[11].click()");
+            browser.executeScript("document.getElementsByClassName('alert-radio-label sc-ion-alert-md')[11].click()");
             utilities.pageWaitSec(14);
             utilities.waitUtilElementPresent(addressPagePO.billDropDownOk, waitTimeout);
             utilities.HighlightElement(addressPagePO.billDropDownOk);
@@ -362,18 +359,14 @@ let addressPage = function () {
     this.billingAddressCA1 = function () {
         var addressPagePO = new addressPageObj();
 
-  
+        utilities.waitForElement(addressPagePO.billFirstName, waitTimeout);
+        utilities.waitForElement(addressPagePO.customerType, waitTimeout);
+        addressPagePO.customerType.click();
         utilities.pageWaitSec(10);
         // utilities.waitUtilElementPresent(addressPagePO.customerTypeNew, waitTimeout);
         // utilities.HighlightElement(addressPagePO.customerTypeNew);
 
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-            if(browserDetails.executionName == 'iphone'){
-                browser.executeScript("document.getElementsByClassName('ionic-selectable-cover')[0].click();");
-            }
-            else {
-                addressPagePO.customerType.click();
-            }
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNewMobile, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNewMobile);
             addressPagePO.customerTypeNewMobile.click();
@@ -382,9 +375,6 @@ let addressPage = function () {
             addressPagePO.billDropDownOk.click();
         }
         else{
-            utilities.waitForElement(addressPagePO.billFirstName, waitTimeout);
-            utilities.waitForElement(addressPagePO.customerType, waitTimeout);
-            addressPagePO.customerType.click();
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNew, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNew);
             addressPagePO.customerTypeNew.click();
@@ -411,27 +401,23 @@ let addressPage = function () {
         utilities.waitForElement(addressPagePO.billCity, waitTimeout);
         utilities.scrollTo(addressPagePO.billCity);
         addressPagePO.billCity.sendKeys(testInputs.CAAddress.City);
-       
+        reportInfo.log("City value is entered in the billing address section");
+        utilities.waitForElement(addressPagePO.billStateDropDown, waitTimeout);
         // utilities.mouseclick(addressPagePO.billStateDropDown);
         browser.sleep(5000);
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-           // browser.executeScript("document.getElementById('select_state').click();");
-           browser.executeScript("document.getElementsByClassName('ionic-selectable-cover')[2].click();");
+            browser.executeScript("document.getElementById('select_state').click();");
             browser.sleep(7000);
-            utilities.pageWait();
-            browser.executeScript("document.querySelector('ionic-selectable-modal ion-item:nth-child(3)').click();")
             reportInfo.log("State value is selected from the dropdown in the billing address section");
             utilities.HighlightElement(addressPagePO.billDropDownOk);
             utilities.pageWaitSec(14);
-           // browser.executeScript("document.getElementsByClassName('alert-radio-label sc-ion-alert-md')[11].click()");
+            browser.executeScript("document.getElementsByClassName('alert-radio-label sc-ion-alert-md')[11].click()");
             utilities.pageWaitSec(14);
             utilities.waitUtilElementPresent(addressPagePO.billDropDownOk, waitTimeout);
             utilities.HighlightElement(addressPagePO.billDropDownOk);
             addressPagePO.billDropDownOk.click();
         }
         else {
-            reportInfo.log("City value is entered in the billing address section");
-            utilities.waitForElement(addressPagePO.billStateDropDown, waitTimeout);
             addressPagePO.billStateDropDown.click();
             browser.sleep(5000);
             addressPagePO.customerTypeNew.click();
@@ -455,28 +441,24 @@ let addressPage = function () {
         var addressPagePO = new addressPageObj();
         var homePagePO = new homePageObj();
         var Address = testAddress;
-       // console.log("****Address***", testAddress, "***Address***", Address);
+        console.log("****Address***", testAddress, "***Address***", Address);
         utilities.waitUtilElementPresent(addressPagePO.billFirstName, waitTimeout);
+        utilities.waitUtilElementPresent(addressPagePO.customerType, waitTimeout);
         addressPagePO.provideEventDetail.count().then(function (stdcount) {
             var count = stdcount;
-           // console.log("text area *** ", count)
+            console.log("text area *** ", count)
             if (count > 1) {
                 document.getElementsByClassName('native-textarea')[0].value = 'test';
             }
         })
-
+        addressPagePO.customerType.click();
+        utilities.HighlightElement(addressPagePO.customerType);
         // browser.executeScript("document.getElementsByClassName('alert-radio-button alert-tappable alert-radio ion-focusable sc-ion-alert-md')[0].click()");
         // utilities.waitForElement(addressPagePO.billDropDownOk, waitTimeout);
         // utilities.HighlightElement(addressPagePO.billDropDownOk);
         // addressPagePO.billDropDownOk.click();
 
         if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-            if(browserDetails.executionName == 'iphone'){
-                browser.executeScript("document.getElementsByClassName('ionic-selectable-cover')[0].click();");
-            }
-            else {
-                addressPagePO.customerType.click();
-            }
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNewMobile, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNewMobile);
             addressPagePO.customerTypeNewMobile.click();
@@ -485,8 +467,6 @@ let addressPage = function () {
             addressPagePO.billDropDownOk.click();
         }
         else{
-            addressPagePO.customerType.click();
-            utilities.HighlightElement(addressPagePO.customerType);
             utilities.waitUtilElementPresent(addressPagePO.customerTypeNew, waitTimeout);
             utilities.HighlightElement(addressPagePO.customerTypeNew);
             addressPagePO.customerTypeNew.click();
@@ -505,23 +485,12 @@ let addressPage = function () {
         utilities.waitUtilElementPresent(addressPagePO.billCity, waitTimeout);
         utilities.scrollTo(addressPagePO.billCity);
         addressPagePO.billCity.sendKeys(testAddress.City);
-
-      
-        if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-       browser.executeScript("document.getElementsByClassName('ionic-selectable-cover')[2].click();");
-       utilities.pageWait();
-       browser.executeScript("document.querySelector('ionic-selectable-modal ion-item:nth-child(3)').click();")
-        }
-        else {
-       utilities.waitUtilElementPresent(addressPagePO.billStateDropDown, waitTimeout);
-       utilities.scrollTo(addressPagePO.billStateDropDown);
-       addressPagePO.billStateDropDown.click(); 
-       utilities.waitUtilElementPresent(addressPagePO.billDropDownOk, waitTimeout);
-       //browser.executeScript("document.getElementsByClassName('alert-radio-label sc-ion-alert-md')[7].click()");
-       utilities.pageWait();
-        }
-
-
+        utilities.waitUtilElementPresent(addressPagePO.billStateDropDown, waitTimeout);
+        utilities.scrollTo(addressPagePO.billStateDropDown);
+        addressPagePO.billStateDropDown.click();
+        utilities.waitUtilElementPresent(addressPagePO.billDropDownOk, waitTimeout);
+        browser.executeScript("document.getElementsByClassName('alert-radio-label sc-ion-alert-md')[7].click()");
+        utilities.pageWait();
         utilities.waitUtilElementPresent(addressPagePO.billDropDownOk, waitTimeout);
         addressPagePO.billDropDownOk.click();
         utilities.waitUtilElementPresent(addressPagePO.billZipCode, waitTimeout);
@@ -540,7 +509,7 @@ let addressPage = function () {
         utilities.waitUtilElementPresent(addressPagePO.searchCustomer, waitTimeout);
         utilities.HighlightElement(addressPagePO.searchCustomer);
         browser.executeScript("document.getElementsByTagName('ion-input')[0].querySelector('input').dispatchEvent(new Event('focus'))");
-        utilities.pageWaitSec(10);
+        utilities.pageWaitSec(5);
         utilities.scrollTo(addressPagePO.customerSearchTextField);
         utilities.waitUtilElementPresent(addressPagePO.customerSearchTextField, waitTimeout);
         utilities.HighlightElement(addressPagePO.customerSearchTextField);
@@ -603,6 +572,46 @@ let addressPage = function () {
         addressPagePO.customerSearchModalSearchButton.click();
         utilities.waitForElement(addressPagePO.customerSearchNoResult, waitTimeout);
         utilities.HighlightElement(addressPagePO.customerSearchNoResult);
+    }
+
+
+    this.advancedCustomerSearchNoResultsVerification = function () {
+        var addressPagePO = new addressPageObj();
+        utilities.waitForElement(addressPagePO.searchCustomer, waitTimeout);
+        utilities.HighlightElement(addressPagePO.searchCustomer);
+        browser.executeScript("document.getElementsByTagName('ion-input')[0].querySelector('input').dispatchEvent(new Event('focus'))");
+        utilities.pageWaitSec(3);
+        utilities.waitForElement(addressPagePO.customerSearchTextField, waitTimeout);
+        addressPagePO.customerSearchModalAdvanceSearch.click();
+        utilities.waitForElement(addressPagePO.customerSearchModalCustomerNumber, waitTimeout);
+        addressPagePO.customerSearchModalCustomerNumber.sendKeys("AF700618");
+        addressPagePO.customerSearchModalFirstName.sendKeys("Isabella");
+        addressPagePO.customerSearchModalLastName.sendKeys("Thomsan");
+        addressPagePO.customerSearchModalPhone.sendKeys("7163723111");
+        addressPagePO.customerSearchModalEmail.sendKeys("IsabellaThomsan@cutco.com");
+        utilities.HighlightElement(addressPagePO.customerSearchModalSearchButton);
+        addressPagePO.customerSearchModalSearchButton.click();
+        utilities.waitForElement(addressPagePO.customerSearchNoResult, waitTimeout);
+        utilities.HighlightElement(addressPagePO.customerSearchNoResult);
+        utilities.attachScreenshot();
+    }
+
+    this.switchBetweenBasicAndAdvancedSearch = function() {
+        var addressPagePO = new addressPageObj();
+        utilities.waitForElement(addressPagePO.searchCustomer, waitTimeout);
+        utilities.HighlightElement(addressPagePO.searchCustomer);
+        browser.executeScript("document.getElementsByTagName('ion-input')[0].querySelector('input').dispatchEvent(new Event('focus'))");
+        utilities.pageWaitSec(3);
+        expect(addressPagePO.customerSearchTextField.isDisplayed());
+        expect(addressPagePO.customerSearchModalAdvanceSearch.isDisplayed());
+        utilities.HighlightElement(addressPagePO.customerSearchModalAdvanceSearch);
+        addressPagePO.customerSearchModalAdvanceSearch.click();
+        expect(addressPagePO.customerSearchModalCustomerNumber.isDisplayed());
+        expect(addressPagePO.customerSearchModalBasicSearch.isDisplayed());
+        utilities.HighlightElement(addressPagePO.customerSearchModalBasicSearch);
+        addressPagePO.customerSearchModalBasicSearch.click();
+        expect(addressPagePO.customerSearchModalAdvanceSearch.isDisplayed());
+        utilities.attachScreenshot();
     }
 
     this.billingAddressSameAsShippingLink = function () {
@@ -793,9 +802,7 @@ let addressPage = function () {
     this.nextButtonCheckout = function () {
         var addressPagePO = new addressPageObj();
         utilities.HighlightElement(addressPagePO.nextButton);
-        utilities.scrollTo(addressPagePO.nextButton);
         if (browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-           
             addressPagePO.nextButton.click();
         } else {
             utilities.click(addressPagePO.nextButton);
@@ -893,7 +900,7 @@ let addressPage = function () {
         utilities.attachScreenshot();
         addressPagePO.standardizationAddressCount.count().then(function (stdcount) {
             var count = stdcount;
-           // console.log("**** address count **** ", count)
+            console.log("**** address count **** ", count)
             if (count > 1) {
                 utilities.log("&&&& selected First address &&&&& ");
                 utilities.waitForElement(addressPagePO.suggestedBillingAddress, waitTimeout);

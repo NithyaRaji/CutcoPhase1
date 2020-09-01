@@ -15,20 +15,18 @@ let bonusAdvisor = function () {
         utilities.HighlightElement(BonusPO.bonusAdvisor);
         BonusPO.bonusAdvisor.click();
 
-        utilities.pageWaitSec(5);  
         var done = element(by.css(".introjs-donebutton"));
-        utilities.waitUtilElementPresent(done); 
         utilities.HighlightElement(done);
         done.click();
     }
 
     this.addBonusProduct = function () {
         var BonusPO = new BonusAdvisorObj();
+        utilities.waitForElement(BonusPO.bonusAddFirstProduct, waitTimeout);
         var BonusProductNameStore;
-        utilities.waitUtilElementPresent(BonusPO.bonusAddFirstProduct, waitTimeout);
         BonusPO.bonusFirstProductName.getText().then(function (text) {
             BonusProductNameStore = text;
-          //  console.log('****** Stored Bonus Product Name ******', BonusProductNameStore);
+            console.log('****** Stored Bonus Product Name ******', BonusProductNameStore);
         });
         utilities.HighlightElement(BonusPO.bonusAddFirstProduct);
         browser.executeScript("document.getElementsByClassName('bonusable-item-add-to-cart')[0].click();");

@@ -10,9 +10,9 @@ var browseObj = require('../com.sirius.pageObjects/browseByCategory_po');
 var loginPOj = require('../com.sirius.pageObjects/login_po.js');
 var browseObj = require('../com.sirius.pageObjects/browseByCategory_po');
 
-// const {
-//     assert
-// } = require("chai");
+const {
+    assert, expect
+} = require("chai");
 // const {
 //     expect
 // } = require("chai");
@@ -33,19 +33,6 @@ let homePage = function () {
         var menuListPO = new menuListObj();
         var browsePO = new browseObj();
 
-        if (browserDetails.executionName == 'android' || browserDetails.executionName == 'iphone' || browserDetails.executionName == 'ipad') {
-            utilities.waitUtilElementPresent(homePagePO.hamburgerMenuMobile, waitTimeout);
-            utilities.HighlightElement(homePagePO.hamburgerMenuMobile);
-            //homePagePO.hamburgerMenuMobile.click();
-            browser.executeScript(clickHam);
-            reportInfo.log('Humburger menu is clicked and left navigation is opened');
-            utilities.waitForElement(menuListPO.homeLink, waitTimeout);
-            utilities.attachScreenshot();
-            utilities.HighlightElement(menuListPO.promoLink)
-            menuListPO.promoLink.click();
-            reportInfo.log('Promo is selected from the left navigation links');
-            utilities.pageWait();
-        } else {
         utilities.waitUtilElementPresent(homePagePO.hamburgerMenu, waitTimeout);
         utilities.HighlightElement(homePagePO.hamburgerMenu);
         homePagePO.hamburgerMenu.click();
@@ -54,8 +41,44 @@ let homePage = function () {
         utilities.HighlightElement(menuListPO.promoLink);
         menuListPO.promoLink.click();
         browser.sleep(10000);
-        }
+    }
 
+   /* this.clickOutsideNotificationOveray = function () {
+        var homePagePO = new homePageObj();
+        utilities.waitUtilElementPresent(homePagePO.messageNotification, waitTimeout);
+        utilities.HighlightElement(homePagePO.messageNotification);
+        homePagePO.messageNotification.click();
+
+        expect(homePagePO.notificationOverlay.isPresent());
+        console.log("notification overlay is present");
+
+        homePagePO.notificationOverlay.hide();
+        homePage.notificationOverlay.
+        homePagePO.cutcoLogo.click();
+        expect(homePagePO.notificationOverlay.isPresent()).toBeFalsy();
+        console.log("Clicking outside the overlay successfully closed the notification");
+    } */
+
+    this.verifyNotificationMessageCount = function () {
+        var badgeCount;
+        var overlayCount;
+        var homePagePO = new homePageObj();
+        utilities.waitUtilElementPresent(homePagePO.messageNotification, waitTimeout);
+        utilities.HighlightElement(homePagePO.messageNotification);
+            homePagePO.notificationBadgeCount.getText().then(function(text) {
+                badgeCount = text;
+                console.log("Printing badge count");
+                console.log(badgeCount); 
+            });
+            homePagePO.messageNotification.click();
+            
+            homePagePO.notificationOverlayCount.count().then(function(size) {
+                overlayCount = size;
+                console.log("Printing overlay count");
+                console.log(overlayCount); 
+                assert.equal(badgeCount,overlayCount);
+                console.log('Overlay message count and the batch Counts are matching')
+            });
     }
 
     this.verfiyHomePage = function () {
@@ -182,7 +205,7 @@ let homePage = function () {
                 browsePO.retryBtn.getText().then(function (text) {
                     store = text;
                     utilities.HighlightElement(browsePO.retryBtn);
-                   // console.log("**** store **** ", store);
+                    console.log("**** store **** ", store);
                     if (store.indexOf("Retry") === -1) {
                         utilities.waitUtilElementPresent(browsePO.retryBtn, waitTimeout);
                         utilities.HighlightElement(browsePO.retryBtn);
@@ -214,7 +237,7 @@ let homePage = function () {
             browsePO.retryBtn.getText().then(function (text) {
                 store = text;
                 utilities.HighlightElement(browsePO.retryBtn);
-               // console.log("**** store **** ", store);
+                console.log("**** store **** ", store);
                 if (store.indexOf("Retry") === -1) {
                     utilities.waitUtilElementPresent(browsePO.retryBtn, waitTimeout);
                     utilities.HighlightElement(browsePO.retryBtn);
@@ -302,18 +325,18 @@ let homePage = function () {
 
             //browser.executeScript(clickHam);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-           // console.log(companyDetails);
+            console.log(companyDetails);
             var companyNameValue = homePagePO.companyNameMobile.getText();
-           // console.log('companyName:::::', companyNameValue);
+            console.log('companyName:::::', companyNameValue);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-            // console.log('Company Details - JavaScript', companyDetails);
+            console.log('Company Details - JavaScript', companyDetails);
 
             homePagePO.companyNameMobile.getText().then(function (text) {
                 store = text;
-               // console.log("**** store **** ", store);
-               // console.log("**** Index Value of Cutco Home US **** ", store.indexOf("Cutco at Home US"));
+                console.log("**** store **** ", store);
+                console.log("**** Index Value of Cutco Home US **** ", store.indexOf("Cutco at Home US"));
                 if (store.indexOf("Cutco at Home US") === -1) {
-                  //  console.log('Inside of indexOf looping ****');
+                    console.log('Inside of indexOf looping ****');
                     utilities.waitForElement(homePagePO.hamburgerMenuMobile, waitTimeout);
                     reportInfo.log('Humburger menu is clicked and left navigation is opened');
                     utilities.waitForElement(homePagePO.changeCompanyMobile, waitTimeout);
@@ -349,9 +372,9 @@ let homePage = function () {
             var store;
             homePagePO.profilePlace.getText().then(function (text) {
                 store = text;
-                // console.log("**** store **** ", store);
+                console.log("**** store **** ", store);
                 if (store.indexOf("Cutco") === -1) {
-                  //  console.log("Not in cutco store and hence switching the store");
+                    console.log("Not in cutco store and hence switching the store");
                     utilities.waitUtilElementPresent(homePagePO.contactProfile, waitTimeout);
                     utilities.HighlightElement(homePagePO.contactProfile);
                     utilities.click(homePagePO.contactProfile);
@@ -406,19 +429,19 @@ let homePage = function () {
 
             //  browser.executeScript(clickHam);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-           // console.log(companyDetails);
+            console.log(companyDetails);
             var companyNameValue = homePagePO.companyNameMobile.getText();
-            // console.log('companyName:::::', companyNameValue);
+            console.log('companyName:::::', companyNameValue);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-            // console.log('Company Details - JavaScript', companyDetails);
+            console.log('Company Details - JavaScript', companyDetails);
 
             homePagePO.companyNameMobile.getText().then(function (text) {
                 store = text;
 
-                // console.log("**** store **** ", store);
-                // console.log("**** Index Value of Cutco Home US **** ", store.indexOf("Cutco at Home US"));
+                console.log("**** store **** ", store);
+                console.log("**** Index Value of Cutco Home US **** ", store.indexOf("Cutco at Home US"));
                 if (store.indexOf("Cutco at Home US") === -1) {
-                  //  console.log('Inside of indexOf looping ****');
+                    console.log('Inside of indexOf looping ****');
                     utilities.waitForElement(homePagePO.hamburgerMenuMobile, waitTimeout);
                     reportInfo.log('Humburger menu is clicked and left navigation is opened');
                     utilities.waitForElement(homePagePO.changeCompanyMobile, waitTimeout);
@@ -448,9 +471,9 @@ let homePage = function () {
             var store;
             homePagePO.profilePlace.getText().then(function (text) {
                 store = text;
-               // console.log("**** store **** ", store);
+                console.log("**** store **** ", store);
                 if (store.indexOf("Cutco") === -1) {
-                  //  console.log("Not in cutco store and hence switching the store");
+                    console.log("Not in cutco store and hence switching the store");
                     utilities.waitUtilElementPresent(homePagePO.contactProfile, waitTimeout);
                     utilities.HighlightElement(homePagePO.contactProfile);
                     utilities.click(homePagePO.contactProfile);
@@ -495,16 +518,16 @@ let homePage = function () {
 
             // var companyDetails = 
             browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-           // console.log(companyDetails);
+            console.log(companyDetails);
             var companyNameValue = homePagePO.companyNameMobile.getText();
-           // console.log('companyName:::::', companyNameValue);
+            console.log('companyName:::::', companyNameValue);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-            // console.log('Company Details - JavaScript', companyDetails);
+            console.log('Company Details - JavaScript', companyDetails);
             homePagePO.companyNameMobile.getText().then(function (text) {
                 store = text;
-                // console.log("***actual text***", text);
-                // console.log("**** store **** ", store);
-                // console.log("Vector CA Index Value ", store.indexOf("Vector CA"));
+                console.log("***actual text***", text);
+                console.log("**** store **** ", store);
+                console.log("Vector CA Index Value ", store.indexOf("Vector CA"));
                 if (store.indexOf("Vector CA") == -1) {
                     utilities.waitForElement(homePagePO.hamburgerMenuMobile, waitTimeout);
                     utilities.attachScreenshot();
@@ -544,7 +567,7 @@ let homePage = function () {
 
             homePagePO.profilePlace.getText().then(function (text) {
                 store = text;
-                // console.log("**** place **** ", store);
+                console.log("**** place **** ", store);
                 if (store.indexOf("CA") === -1) {
                     utilities.log("Not in Vector CA store and hence switching the store");
                     utilities.waitUtilElementPresent(homePagePO.contactProfile, waitTimeout);
@@ -596,16 +619,16 @@ let homePage = function () {
 
 
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-           // console.log(companyDetails);
+            console.log(companyDetails);
             var companyNameValue = homePagePO.companyNameMobile.getText();
-            // console.log('companyName:::::', companyNameValue);
+            console.log('companyName:::::', companyNameValue);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-            // console.log('Company Details - JavaScript', companyDetails);
+            console.log('Company Details - JavaScript', companyDetails);
             homePagePO.companyNameMobile.getText().then(function (text) {
                 store = text;
-                // console.log("***actual text***", text);
-                // console.log("**** store **** ", store);
-                // console.log("Vector CA Index Value ", store.indexOf("Vector CA"));
+                console.log("***actual text***", text);
+                console.log("**** store **** ", store);
+                console.log("Vector CA Index Value ", store.indexOf("Vector CA"));
                 if (store.indexOf("Vector CA") == -1) {
                     utilities.waitForElement(homePagePO.hamburgerMenuMobile, waitTimeout);
                     utilities.attachScreenshot();
@@ -637,7 +660,7 @@ let homePage = function () {
 
             homePagePO.profilePlace.getText().then(function (text) {
                 store = text;
-               // console.log("**** place **** ", store);
+                console.log("**** place **** ", store);
                 if (store.indexOf("CA") === -1) {
                     utilities.log("Not in Vector CA store and hence switching the store");
                     utilities.waitUtilElementPresent(homePagePO.contactProfile, waitTimeout);
@@ -828,14 +851,14 @@ let homePage = function () {
             utilities.waitUtilElementPresent(homePagePO.companyNameMobile, waitTimeout);
             utilities.HighlightElement(homePagePO.companyNameMobile);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-           // console.log(companyDetails);
+            console.log(companyDetails);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-           // console.log('Company Details - JavaScript', companyDetails);
+            console.log('Company Details - JavaScript', companyDetails);
 
             homePagePO.companyNameMobile.getText().then(function (text) {
                 store = text;
-              //  console.log("**** store **** ", store);
-              //  console.log("**** store - Context Value Vector US **** ", store.indexOf("Vector US"));
+                console.log("**** store **** ", store);
+                console.log("**** store - Context Value Vector US **** ", store.indexOf("Vector US"));
                 if (store.indexOf("Vector US") === -1) {
                     utilities.attachScreenshot();
                     utilities.waitForElement(homePagePO.hamburgerMenuMobile, waitTimeout);
@@ -876,7 +899,7 @@ let homePage = function () {
             var store;
             homePagePO.profilePlace.getText().then(function (text) {
                 store = text;
-                // console.log("**** place **** ", store);
+                console.log("**** place **** ", store);
 
                 if (store.indexOf("Vector US") === -1) {
                     utilities.log("Not in Vector CA store and hence switching the store");
@@ -930,14 +953,14 @@ let homePage = function () {
             utilities.waitUtilElementPresent(homePagePO.companyNameMobile, waitTimeout);
             utilities.HighlightElement(homePagePO.companyNameMobile);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-            // console.log(companyDetails);
+            console.log(companyDetails);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-            // console.log('Company Details - JavaScript', companyDetails);
+            console.log('Company Details - JavaScript', companyDetails);
 
             homePagePO.companyNameMobile.getText().then(function (text) {
                 store = text;
-               // console.log("**** store **** ", store);
-               // console.log("**** store - Context Value Vector US **** ", store.indexOf("Vector US"));
+                console.log("**** store **** ", store);
+                console.log("**** store - Context Value Vector US **** ", store.indexOf("Vector US"));
                 if (store.indexOf("Vector US") === -1) {
                     utilities.attachScreenshot();
                     utilities.waitForElement(homePagePO.hamburgerMenuMobile, waitTimeout);
@@ -972,7 +995,7 @@ let homePage = function () {
             homePagePO.messageHeader.isPresent().then(function (result) {
                 utilities.log("homePagePO.messageHeader found ", result);
                 if (result) {
-                  //  console.log("homePagePO.messageHeader found");
+                    console.log("homePagePO.messageHeader found");
                     utilities.HighlightElement(homePagePO.messageHeader);
                     utilities.scrollTo(homePagePO.messageGotItButton);
                     reportInfo.log('Wait for the message modal and Got it option in the home page');
@@ -1026,9 +1049,9 @@ let homePage = function () {
             utilities.waitUtilElementPresent(homePagePO.companyNameMobile, waitTimeout);
             utilities.HighlightElement(homePagePO.companyNameMobile);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-           // console.log(companyDetails);
+            console.log(companyDetails);
             var companyDetails = browser.executeScript("document.getElementsByClassName('company')[0].innerText");
-           // console.log('Company Details - JavaScript', companyDetails);
+            console.log('Company Details - JavaScript', companyDetails);
 
             homePagePO.companyNameMobile.getText().then(function (text) {
                 store = text;
@@ -1112,7 +1135,7 @@ let homePage = function () {
             homePagePO.messageHeader.isPresent().then(function (result) {
                 utilities.log("homePagePO.messageHeader found ", result);
                 if (result) {
-                   // console.log("homePagePO.messageHeader found");
+                    console.log("homePagePO.messageHeader found");
                     utilities.HighlightElement(homePagePO.messageHeader);
                     utilities.scrollTo(homePagePO.messageGotItButton);
                     reportInfo.log('Wait for the message modal and Got it option in the home page');
@@ -1176,7 +1199,7 @@ let homePage = function () {
             homePagePO.messageHeader.isPresent().then(function (result) {
                 utilities.log("homePagePO.messageHeader found ", result);
                 if (result) {
-                 //   console.log("homePagePO.messageHeader found");
+                    console.log("homePagePO.messageHeader found");
                     utilities.HighlightElement(homePagePO.messageHeader);
                     utilities.scrollTo(homePagePO.messageGotItButton);
                     reportInfo.log('Wait for the message modal and Got it option in the home page');
@@ -1280,7 +1303,7 @@ let homePage = function () {
                 homePagePO.messageHeader.isPresent().then(function (result) {
                     utilities.log("homePagePO.messageHeader found ", result);
                     if (result) {
-                      //  console.log("homePagePO.messageHeader found");
+                        console.log("homePagePO.messageHeader found");
                         utilities.HighlightElement(homePagePO.messageHeader);
                         utilities.scrollTo(homePagePO.messageGotItButton);
                         reportInfo.log('Wait for the message modal and Got it option in the home page');
@@ -1327,7 +1350,7 @@ let homePage = function () {
             homePagePO.messageHeader.isPresent().then(function (result) {
                 utilities.log("homePagePO.messageHeader found ", result);
                 if (result) {
-                  //  console.log("homePagePO.messageHeader found");
+                    console.log("homePagePO.messageHeader found");
                     utilities.HighlightElement(homePagePO.messageHeader);
                     utilities.scrollTo(homePagePO.messageGotItButton);
                     reportInfo.log('Wait for the message modal and Got it option in the home page');
@@ -1344,6 +1367,7 @@ let homePage = function () {
 
 
     }
+
 
     this.resumeOrderSectionValidations = function () {
         var homePagePO = new homePageObj();
@@ -1438,9 +1462,6 @@ let homePage = function () {
         var homePagePO = new homePageObj();
         var CheckFirstName = testInputs.USAddress.FirstName;
         var CheckLastName = testInputs.USAddress.LastName;
-        utilities.waitUtilElementPresent(homePagePO.pendingOrderHeader);
-        utilities.HighlightElement(homePagePO.pendingOrderHeader);
-        homePagePO.pendingOrderHeader.click();
         utilities.waitForElement(homePagePO.comments, waitTimeout);
         utilities.HighlightElement(homePagePO.pendingOrderName);
     }
@@ -1541,6 +1562,7 @@ let homePage = function () {
             utilities.waitUtilElementPresent(homePagePO.loginButton);
             // utilities.click(homePagePO.loginButton);
             reportInfo.log('Logout button is clicked');
+            utilities.attachScreenshot();
         }
     }
 
@@ -1549,7 +1571,7 @@ let homePage = function () {
         var menuListPO = new menuListObj();
         var browsePO = new browseObj();
 
-        utilities.waitUtilElementPresent(homePagePO.hamburgerMenu, waitTimeout);
+        utilities.waitForElement(homePagePO.hamburgerMenu, waitTimeout);
         utilities.HighlightElement(homePagePO.hamburgerMenu);
         homePagePO.hamburgerMenu.click();
 
@@ -1567,7 +1589,7 @@ let homePage = function () {
         utilities.waitForElement(homePagePO.hamburgerMenu, waitTimeout);
         utilities.HighlightElement(homePagePO.hamburgerMenu);
         homePagePO.hamburgerMenu.click();
-        expect(homePagePO.litLink);
+        expect(homePagePO.litLink); 
 
     }
 
@@ -1579,8 +1601,8 @@ let homePage = function () {
             utilities.HighlightElement(homePagePO.companyNameMobile);
             homePagePO.companyNameMobile.getText().then(function (text) {
                 store = text;
-               // console.log("**** store **** ", store);
-               // console.log("**** store index value **** ", store.indexOf("Cutco"));
+                console.log("**** store **** ", store);
+                console.log("**** store index value **** ", store.indexOf("Cutco"));
 
                 utilities.waitForElement(homePagePO.hamburgerMenuMobile, waitTimeout);
                 reportInfo.log('Humburger menu is clicked and left navigation is opened');
