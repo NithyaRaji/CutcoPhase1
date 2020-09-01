@@ -12,6 +12,17 @@ let login = function () {
     this.forgotPasswordLink = element(by.xpath(".//div[@class='login-help-links']//*[contains(.,'Forgot')]"));
     this.needHelpLink = element(by.xpath(".//div[@class='login-help-links']//*[contains(.,'Help')]"));
     this.forgotPage = element(by.css(".forgot-password-form"));
+    this.forgotPasswordLinkLoginPage = element(by.xpath(".//*[contains(text(),'Forgot Password?')]"));
+    this.resetPasswordPage = element(by.xpath(".//div[@class='forgot-password-wrapper']"));
+    this.resetPasswordTitle = element(by.xpath(".//div[@class='forgot-password-wrapper']//*[contains(text(),'Reset Password')]"));
+
+    this.forgotUserIdLinkLoginPage = element(by.xpath(".//*[contains(text(),'Forgot User ID?')]"));
+    this.resetPasswordPage = element(by.xpath(".//div[@class='forgot-password-wrapper']"));
+    this.resetPasswordTitle = element(by.xpath(".//div[@class='forgot-password-wrapper']//*[contains(text(),'Reset Password')]"))
+
+    // this.forgotPasswordLinkLoginPage = element(by.xpath(".//*[contains(text(),'Forgot Password?')]"));
+    // this.resetPasswordPage = element(by.xpath(".//div[@class='forgot-password-wrapper']"));
+    // this.resetPasswordTitle = element(by.xpath(".//div[@class='forgot-password-wrapper']//*[contains(text(),'Reset Password')]"));
  
 };
 module.exports =  login;

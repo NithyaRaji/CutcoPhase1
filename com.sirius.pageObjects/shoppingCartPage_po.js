@@ -43,6 +43,7 @@ let shoppingCart = function () {
   this.qtyModalCancelButton = element(by.xpath('//*[@class="cc-button-wrapper-select"]/ion-button[2]'));
   this.overlayTitle = element(by.css(".modal-wrapper .title-md"));
   this.engraveText = element(by.css("#input_line0_engraving>input"));
+  this.quantityNumber11 = element(by.xpath('//ion-radio[@ng-reflect-name="option-11"]'));
 
   this.selectSecondProduct = element(by.xpath("(//cc-cart-item//*[@class='cart-item-details-wrapper'])[2]"));
   this.confirmCancelModal = element(by.xpath(".//ion-title[.='Confirm Cancel']"));
@@ -69,8 +70,6 @@ let shoppingCart = function () {
 
   this.bonusFromCatalog = element(by.xpath('//div[@class="tabs-header"]//span[contains(text(),"From Catalog")]'));
   this.bonusFromCart = element(by.xpath('//div[@class="tabs-header"]//span[contains(text(),"From Cart")]'));
-  this.bonusAdvisorGiftErrorMsg = element(by.xpath(".bonusable-items-wrapper .cc-error-message"));
-
 
   this.moreBonusOption = element.all(by.id("text_bonus_cpo")).last();
   this.moreDeleteOption = element.all(by.css("#text_delete_cpo")).last();
@@ -82,6 +81,10 @@ let shoppingCart = function () {
   this.saveButton = element(by.id("btn_saveOrder_cart"));
   this.cancelSaveOrder = element(by.css("#btn_cancel_som"));
   this.saveOrderButton = element(by.id("btn_save_som"));
+  this.cancelSaveOrderUsingXicon = element(by.id("btn_close_som"));
+  this.invalidReasonError = element(by.xpath(".//div[@class='error-message ng-star-inserted' and contains(.,'Comment has invalid characters')]"));
+  this.removeCardNumberFromCommentFieldError = element(by.xpath(".//div[contains(text(), 'Please remove any credit card numbers from the comment field.')]"));
+
 
   //EngraveOption
   this.engraveTypeEngrave = element(by.id("btn_type_E_engraving"));
@@ -96,8 +99,6 @@ let shoppingCart = function () {
   this.engraveText = element(by.css("#input_line0_engraving>input"));
   this.engraveSubmitButton = element(by.id("btn_apply_engraving"));
   this.GWSubmitButton = element(by.id("btn_submit_gw"));
-  this.engravingAIcon = element(by.css(".cart-item-additional-icons"));
-  this.bonusAdvisorengravingAIcon = element(by.css("cc-bonusable-item .engraving-icon-wrapper"));
 
   //configuration icon
   this.configSetting = element.all(by.id('header_config_btn')).first();
@@ -117,14 +118,6 @@ let shoppingCart = function () {
   this.socialDemoSubmitButtonEnable = element(by.css(".select-btn.ion-activatable"));
   this.checkStatus = element(by.css(".checkin-status"));
   this.checkoutStatusChange = element(by.css(".checkout-container"));
-
-  this.customerSelect = element(by.css(".search-customer"));
-  this.customerSearchInput = element(by.css(".search-inputs input"));
-  this.customerSelection = element(by.css("cc-customer-detail-item div"));
-  this.customerSearchButton = element(by.css(".search-button"));
-  this.customerSearchSelectButton = element(by.css(".select-btn"));
-
-  this.inventoryToggleSelecticon = element(by.css('.inventory-toggle'));
 
   this.orderTypeRegular = element(by.id("btn_orderType_REG_config"));
   this.orderTypeRelator = element(by.id("btn_orderType_RLT_config"));
@@ -174,12 +167,46 @@ let shoppingCart = function () {
   this.engraveApplied = element(by.css(".engraving-name"));
   this.engraveModalHeader = element(by.css("cc-engraving-modal ion-title"));
   this.shoppingCartHeader = element(by.css("cc-cart .shopping-cart-header"));
+  this.saveProductIDFromCart = element(by.xpath(".//*[@class='cart-item-all']//*[@class='product-item-number']"));
+  this.saveProductTitleFromCart = element(by.xpath(".//*[@class='cart-item-all']//*[@class='cart-item-name']"));
+  this.saveProductColorFromCart = element(by.xpath(".//*[@class='cart-item-all']//*[@class='product-item-color']"));
+  this.saveProductQtyFromCart = element(by.xpath(".//*[@class='cart-item-all']//*[@class='cc-select-qty-fake-value']"));
+  this.engraveModalTitle = element(by.xpath(".//ion-title[contains(text(),'Engraving Options')]"));
+  this.saveProductIDFromEngravingModal = element(by.xpath(".//div[@class='attribute-container']//*[@class='id']"));
+  this.saveProductTitleFromEngravingModal = element(by.xpath("//*[@class='item-name']"));
+  this.saveProductColorFromEngravingModal = element(by.xpath(".//div[@class='attribute-container']//*[@class='color']"));
+  this.saveProductQtyFromEngravingModal = element(by.xpath(".//div[@class='attribute-container']//*[@class='qty']"));
+
+  this.squarePlatePriceFromEngraveModal = element(by.xpath(".//*[@id='btn_placement_S_engraving']//div[@class='ng-star-inserted']"));
+  this.engraveIconInCart = element(by.xpath(".//*[@class='engraving-icon-wrapper']//*[@name='cc-engraved']"));
+  this.engraveTitleInCart = element(by.xpath(".//*[@class='engraving-name' and text()=' Engraving ']"));
+  this.engravingDetailsInCart = element(by.xpath(".//*[@class='engraving-details']"));
+  this.engraveConfigDetails = element(by.xpath(".//*[@class='engraving-config']"));
+  this.engravingLinesInCart = element(by.xpath(".//*[@class='engraving-lines ng-star-inserted']"));
+  this.engravingPlateDetailInCart = element(by.xpath(".//*[@class='engraving-plate-details']"));
+
+  this.engraveBonusedPriceValidation = element(by.xpath(".//*[@class='price-container ng-star-inserted']//*[contains(text(),'0.00')]"));
+  this.engravingPriceValidationForBonusedEngrave = element(by.xpath(".//*[@class='cart-item-additional ng-star-inserted']//*[@class='selling-price' and contains(.,'9.50')]"));
+  this.platePriceValidationForBonusedEngrave = element(by.xpath(".//*[@class='engraving-plate-price-wrapper ng-star-inserted']//*[@class='selling-price ng-star-inserted' and contains(.,'0.00')]"));
 
   //set break down
   this.setBreakButton = element(by.css('#text_editBreakdown_cpo'));
   this.setBreakHeader = element(by.xpath("//ion-title[contains(text(),'Set Breakdown Confirmation')]"));
   this.setBreakContinue = element(by.xpath("//ion-button[contains(text(),'Continue')]"));
   this.setBreakCancel = element(by.xpath("//ion-button[contains(text(),'Cancel')]"));
+
+  //engraving disabled validation
+  this.threeDottedIcon = element(by.className('cart-item-menu-wrapper ng-star-inserted'));
+  this.engraveDisabled = element(by.css('#text_engrave_cpo'));
+  this.engraveDisabledIndication = element(by.xpath(".//div[@id='text_engrave_cpo']//*[@name='remove-circle-outline']"));
+
+  //delete bonus validation
+  this.secondItemInCartMoreIcon = element(by.xpath(".//ion-item[@id='cartItem_1']//ion-icon[@name='more']"));
+  this.bonusOption = element(by.id("text_bonus_cpo"));
+  this.unBonusIcon = element(by.id("text_unbonus_cpo"));
+  this.deleteProductFromCart = element(by.xpath(".//div[text()='Delete']"));
+  this.verifyBonusItemDeletion = element(by.xpath(".//*[@class='cart-item-name'][contains(text(),' Individual Stainless Dinner Fork ')]"));
+
 
   this.bonusQtyIncrease = function (qty) {
     var bonusqtyIncreaseSelect = element(by.css(".cc-modal-select-option:nth-of-type(" + qty + ")"));
@@ -228,6 +255,10 @@ let shoppingCart = function () {
     browser.sleep(5000);
     button.click();
     browser.sleep(7000);
+  }
+
+  this.qtyOfProductinEngravingModal = function(qtyFromCart) {
+    var qtyEngravyModal = element(by.xpath("//*[@class='qty'][contains(.,'" + qtyFromCart + "')]"))
   }
 
 };

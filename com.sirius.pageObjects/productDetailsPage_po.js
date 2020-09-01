@@ -30,6 +30,12 @@ let productDetailsPage = function () {
     this.defaultAttributeSelection = element(by.css(".item-label.item-radio-checked"));
     this.cartIconMobile = element.all(by.xpath("(.//*[@name='cart'])")).last();
 
+    //max quantity verification
+    this.notMoreThan999Error = element(by.xpath(".//div[contains(text(),'Quantity cannot be greater than 999')]"));
+    this.notMoreThan99Error = element(by.xpath(".//div[contains(text(),'Quantity cannot be greater than 99')]"));
+    this.notMoreThan9999Error = element(by.xpath(".//div[contains(text(),'Quantity cannot be greater than 9999')]"));
+
+
     this.skuId = element(by.xpath("(.//div[@class='product-detail-info']//span[contains(@class,'product-item-number')])"));
     this.productName = element.all(by.className("product-title")).last();
     this.giftCardQtyMsg = element(by.css(".warning-text"));

@@ -28,7 +28,7 @@ let paymentPage = function () {
   this.specialInstructionsCheckbox = element.all(by.xpath(".//ion-item[contains(@class,cc-checkbox-standalone)]//ion-checkbox")).first();
 
   //PlaceOrder Page
-  this.billingAddressSection = element(by.css("cc-order-information div"));
+  this.billingAddressSection = element(by.css(".contact-info-wrapper"));
   this.adjustTotalLinkCheckbox = element(by.id("cb_adjustTotals_aot"));
   this.adjustTotalInputTextBox = element(by.css(".cc-currency-field input"));
   this.adjustTotalInputTextBoxiOS = element(by.css(".cc-currency-field input"));
@@ -44,8 +44,7 @@ let paymentPage = function () {
   this.totalBeforeTaxValue = element(by.xpath(".//*[.='Total Before Tax: ']/following-sibling::span"));
   this.orderTotalValue = element(by.xpath("//b[contains(.,'Order Total')]//parent::ion-col//span[@class='text-price']"));
 
-  this.cvvTextbox = element(by.id("cvv"));
-  this.cardDetailsNumberTextbox = element(by.id("credit-card-number"));
+  this.cardDetailsNumberTextbox = element(by.css("#input_cardNumber_pd>input"));
   this.cardDetailsMonthTextbox = element(by.css("#input_expDate_pd>input"));
   this.saveButton = element(by.id("btn_saveOrder_po"));
   this.placeOrderButton = element(by.id("btn_placeOrder"));
@@ -124,12 +123,8 @@ let paymentPage = function () {
   this.yourCommission = element(by.xpath("//ion-label[contains(text(),'Your')]/ancestor::ion-item"));
 
   //month&year
-  this.month = element(by.xpath(".//select[@id='expiration-month']"));
-  this.year = element(by.xpath(".//select[@id='expiration-year']"));
-  this.expMonth = element(by.cssContainingText('option', '05 - May'));
-  this.expyear = element(by.cssContainingText('option', '2030'));
-  this.expyearMobile = element(by.css("#expiration-year option:nth-child(5)"));
-  this.expyearMobileOK = element(by.xpath("//span[contains(.,'OK')]"));
+  this.year = element(by.id('select_expYear'));
+  this.expyear = element(by.xpath('//span[contains(text(),"2026")]'));
 
   //signature
   this.signature = element(by.css('.signature-button.ng-star-inserted'));

@@ -23,7 +23,6 @@ let addressesPage = function () {
     this.billEmail = element(by.css("#input_email>input"));
     this.billStateDistrictDrop = element(by.css(".alert-radio-group button:nth-child(1)"))
     this.billDropDownOk = element(by.css(".confirm"));
-    this.billDropDownOkButton = element(by.xpath("//span [contains(.,'OK')]"));
     this.billEmailLabel = element(by.xpath(".//*[@class='checkout-label']//*[.='Email']"));
     this.eventDetails = element(by.css("#textarea_eventInformation textarea"));
     
@@ -53,17 +52,18 @@ let addressesPage = function () {
 
     this.searchCustomer = element(by.css(".customer-search-wrapper input"));
     this.customerSearchTextField = element(by.xpath(".//*[@id='input_lastName_cs']//input"));
-    this.customerSearchModalAdvanceSearch = element(by.id("span_toggleSearch_cs"));
-    this.customerSearchModalSearchButton = element(by.css("#btn_search_cs"));
+    this.customerSearchModalAdvanceSearch = element(by.xpath(".//span[contains(text(),' Advanced Search ')]"));
+    this.customerSearchModalSearchButton = element(by.id("btn_search_cs"));
     this.customerSearchModalCustomerNumber = element(by.css("#input_customerNumber_cs>input"));
-    this.customerSearchModalFirstName = element(by.id("input_firstName_cs"));
-    this.customerSearchModalLastName = element(by.id("input_lastName_cs"));
-    this.customerSearchModalPhone = element(by.id("input_phoneNumber_cs"));
-    this.customerSearchModalEmail = element(by.xpath("input_emailAddress_cs"));
+    this.customerSearchModalFirstName = element(by.css("#input_firstName_cs>input"));
+    this.customerSearchModalLastName = element(by.css("#input_lastName_cs>input"));
+    this.customerSearchModalPhone = element(by.css("#input_phoneNumber_cs>input"));
+    this.customerSearchModalEmail = element(by.css("#input_emailAddress_cs>input"));
     this.customerSerachModalCloseButton = element(by.xpath(".//*[@class='ion-page']//ion-icon[@name='close']"));
     this.customerSearchNoResult = element(by.css(".no-result-message"));
     this.customerDetailsResult = element(by.css(".cc-customer-detail-item-wrapper"));
     this.customerDetailsResultLast = element.all(by.css(".cc-customer-detail-item-wrapper")).last();
+    this.customerSearchModalBasicSearch = element(by.xpath(".//span[contains(text(),' Basic Search ')]"));
 
     // this.customerTypeNew = element(by.css(".alert-radio-group button:nth-child(1)"));
     this.customerTypeNew = element(by.css(".ng-dropdown-panel-items span:nth-child(1) , .alert-radio-group button:nth-child(1)"));
