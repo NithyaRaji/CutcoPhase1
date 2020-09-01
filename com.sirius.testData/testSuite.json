@@ -1,0 +1,26 @@
+{
+    "basePath" : "../com.sirius.specs/",
+    
+    "regression": ["*.js"],
+    "adjustTotal": ["RA-1608.js","RA-1609.js","RA-1611.js","RA-1612.js","RA-1994.js"],
+    "bonus": ["RA-393.js","RA-394.js","RA-510.js","RA-520.js","RA-522.js","RA-524.js"],
+    "checkout": ["RA-2034.js","RA-2038.js","RA-2039.js","RA-2040.js","RA-2042.js","RA-2043.js","RA-2075.js","RA-2076.js","RA-2079.js","RA-2080.js","RA-2427.js","RA-2428.js","RA-2429.js","RA-2430.js","RA-2431.js","RA-2432.js","RA-2433.js","RA-2434.js","RA-2435.js","RA-2436.js","RA-2437"],
+    "engrave": ["RA-1286.js","RA-405.js","RA-510.js","RA-647.js"],
+    "giftCard": ["RA-1213.js","RA-1215.js","RA-1217.js","RA-1218.js","RA-1221.js"],
+    "login": ["RA-1465.js","RA-1468.js","RA-484.js","RA-543.js","RA-546.js","RA-547.js","RA-609.js","RA-611.js","RA-783.js"],
+    "masquerade": ["RA-1911.js","RA-2034.js","RA-2038.js"],
+    "orderConfig": ["RA-1564.js","RA-1578.js","RA-1584.js","RA-1587.js","RA-1592.js","RA-1770.js","RA-986.js"],
+    "pendingOrder": ["RA-1221.js","RA-1286.js","RA-1404.js","RA-1564.js","RA-1578.js","RA-1611.js","RA-692.js","RA-694.js","RA-699.js","RA-701.js","RA-713.js","RA-716.js","RA-717.js"],
+    "orderConfirmation": ["RA-1690.js","RA-1691.js","RA-1963.js","RA-550.js"],
+    "productLandingPage": ["RA-1215.js","RA-329.js","RA-341.js","RA-345.js","RA-346.js","RA-348.js","RA-351.js","RA-352.js","RA-457.js","RA-495.js","RA-496.js","RA-508.js","RA-556.js","RA-568.js","RA-633.js","RA-645.js","RA-648.js"],
+    "saveOrder": ["RA-1405.js","RA-1406.js","RA-1408.js","RA-1870.js","RA-1871.js","RA-692.js","RA-701.js","RA-713.js","RA-716.js","RA-717.js","RA-795.js"],
+    "search": ["RA-553.js","RA-554.js","RA-557.js","RA-561.js","RA-562.js","RA-563.js","RA-564.js","RA-565.js","RA-606.js","RA-607.js"],
+    "shoppingCart": ["RA-1156.js","RA-1404.js","RA-1405.js","RA-1406.js","RA-1408.js","RA-1409.js","RA-1410.js","RA-1411.js","RA391.js","RA-393.js","RA-405.js","RA-457.js","RA-459.js","RA-460.js","RA-462.js","RA-496.js","RA-510.js","RA-520.js","RA-633.js","RA-645.js","RA-646.js","RA-648.js","RA-653.js","RA-654.js","RA-736.js"],
+    "smoke": ["RA-1156.js","RA-1217.js","RA-2080.js","RA-1286.js","RA-1323.js","RA-1408.js","RA-1468.js","RA-1578.js","RA-2427.js","RA-1770.js","RA-1994.js","RA-2034.js","RA-2038.js","RA-2039.js","RA-2040.js","RA-2042.js","RA-2043.js","RA-2076.js","RA-2429.js","RA-2430.js","RA-2431.js","RA-2433.js","RA-2434.js","RA-2435.js","RA-2437.js","RA-346.js","RA-348.js","RA-393.js","RA-495.js","RA-496.js","RA-520.js","RA-2432.js","RA-522.js","RA-547.js","RA-2428.js","RA-648.js","RA-701.js","RA-2075.js","RA-716.js","RA-2436.js","RA-794.js","RA-2079.js"],
+    "switchContext": ["RA-610.js","RA-611.js","RA-783.js","RA-785.js","RA-794.js","RA-795.js"],
+    "customerSearch": ["RA-886.js","RA-889.js","RA-891.js"],
+    "test": ["RA-550.js"],
+    "bvt" : ["RA-2034.js","RA-2039.js","RA-2427.js","RA-2435.js","RA-2437.js","RA-610.js","RA-1408.js","RA-648.js","RA-1994.js","RA-520.js","RA-1217.js","RA-346.js"],
+    "promo": ["RA-2951.js","RA-2952.js","RA-2953.js","RA-2954.js","RA-2955.js","RA-2958.js","RA-2960.js","RA-2961.js","RA-2966.js","RA-2969.js","RA-2970.js","RA-2971.js","RA-3005.js","RA-3030.js","RA-3032.js","RA-3038.js","RA-3039.js","RA-3101.js"],
+    "suite1":["RA-2034.js","RA-2038.js","RA-2039.js","RA-2040.js","RA-2042.js","RA-2043.js","RA-2075.js","RA-2076.js","RA-2079.js","RA-2080.js","RA-2427.js","RA-2428.js","RA-2429.js","RA-2430.js","RA-2431.js","RA-2432.js","RA-2432.js","RA-2433.js","RA-2434.js","RA-2435.js","RA-2436.js","RA-2437.js","RA-2951.js","RA-2952.js","RA-2953.js","RA-2954.js","RA-2955.js","RA-2958.js","RA-2959.js","RA-2960.js"]
+}

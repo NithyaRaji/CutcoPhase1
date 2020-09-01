@@ -1,0 +1,478 @@
+{
+    "baseUrl" : "https://test.orders.cutcoapps.com/",
+
+    "searchTerm":{
+        "oneNumber": "1",
+        "twoNumber": "12",
+        "threeNumber" : "878",
+        "productName" : "CAN OPENER"
+    },
+    "USAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "65th Hwy",
+        "City": "Paint Rock",
+        "ZipCode" :  "35764",
+        "Phone" : "2567762430"
+    },
+    "StandardizedUSAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "2121 1st NW",
+        "City": "Washington",
+        "ZipCode" :  "20052",
+        "Phone" : "2829829282"
+    },
+
+    "RA_001Address": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "PO BOX 7530",
+        "City": "Memphis",
+        "ZipCode" :  "38188",
+        "Phone" : "2829839282"
+    },
+
+    "RA_002Address": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "PO BOX 7530",
+        "City": "Memphis",
+        "ZipCode" :  "38188",
+        "Phone" : "2829839282"
+    },
+
+    "RA_001AddressShipping" :{
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "626 Pale San Vitores Road",
+        "City": "Memphis",
+        "ZipCode" :  "96913",
+        "Phone" : "2829839282"
+    },
+
+    "RA_003Address": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "10100 Reunion Pl no:500",
+        "City": "Memphis",
+        "ZipCode" :  "78216",
+        "Phone" : "2829839282"
+    },
+
+    "RA_004Address": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "901 North 5th Street",
+        "City": "Memphis",
+        "ZipCode" :  "66101",
+        "Phone" : "2829839282"
+    },
+
+
+    "RA_004ShippingAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "290 Broadway",
+        "City": "Memphis",
+        "ZipCode" :  "10007-1866",
+        "Phone" : "2829839282"
+    },
+
+
+    "RA_006Address": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "701 Mapes Road",
+        "City": "Memphis",
+        "ZipCode" :  "20755-5350",
+        "Phone" : "2829839282"
+    },
+
+
+    "RA_007Address": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "115 Stratford Drives",
+        "City": "Memphis",
+        "ZipCode" :  "07110",
+        "Phone" : "2829839282"
+    },
+
+    "RA_007ShippingAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "800 TECH CENTER DR",
+        "City": "Memphis",
+        "ZipCode" :  "43219",
+        "Phone" : "2829839282"
+    },
+
+    "CAAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "234 Laurier Avenue West",
+        "City": "Ottawa",
+        "ZipCode" :  "K1A0G0",
+        "Phone" : "2829829282"
+    },
+
+    "RA_008CAAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": " 325 Brigade Dr, Hamilton,",
+        "City": "ontario",
+        "ZipCode" :  "L9B2G1",
+        "Phone" : "2829829282"
+    },
+
+    "RA_009CAAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": " 5306 44 Ave, Athabasca",
+        "City": "Alberta",
+        "ZipCode" :  "T9S1J8",
+        "Phone" : "2829829282"
+    },
+
+    "RA_010CAAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "1072 Collins, Cache Creek",
+        "City": "British Columbia",
+        "ZipCode" :  "V0K1H1",
+        "Phone" : "2829829282"
+    },
+
+    "RA_011CAAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "124 Rte 263 Sud, Marston",
+        "City": "Quebec",
+        "ZipCode" :  "G0Y1G0",
+        "Phone" : "2829829282"
+    },
+
+    "RA_012CAAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "5306 44 Ave, Athabasca",
+        "City": "Alberta",
+        "ZipCode" :  "T9S1J8",
+        "Phone" : "2829829282"
+    },
+
+    "RA_012CAAddressShipping": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "325 Brigade Dr, Hamilton,",
+        "City": "ontario",
+        "ZipCode" :  "L9B2G1",
+        "Phone" : "2829829282"
+    },
+    
+    "RA_013CAAddress": {
+        "FirstName": "TestFirstName",
+        "LastName": "TestLastName",
+        "Address1": "325 Brigade Dr, Hamilton",
+        "City": "ontario",
+        "ZipCode" :  "L9B2G1",
+        "Phone" : "2829829282"
+    },
+    "RA_008CAAddressShipping": {
+    "FirstName": "TestFirstName",
+    "LastName": "TestLastName",
+    "Address1": " 5306 44 Ave, Athabasca",
+    "City": "Alberta",
+    "ZipCode" :  "T9S1J8",
+    "Phone" : "2829829282"
+    },
+
+    "MasterCard": {
+        "cardDetail": "5454545454545454",
+        "CardMonths" : "05",
+        "CardYear" : "2022"
+    },
+    "MasterCardCheckout": {
+        "cardDetail": "5454545454545454",
+        "CardMonths" : "05",
+        "CardYear" : "2022"
+    },
+    "RA_005_AMEXCard": {
+        "cardDetail": "373235387881007",
+        "CardMonths" : "05",
+        "CardYear" : "2222"
+    },
+
+
+    "RA_006_DiscoverCard": {
+        "cardDetail": "6011000990139424",
+        "CardMonths" : "05",
+        "CardYear" : "2222"
+    },
+
+    "RA_007_MasterCard" :{
+        "cardDetail": "2223000160000003",
+        "CardMonths" : "05",
+        "CardYear" : "2222"
+    },
+
+    "InvalidLogin" :{
+        "username" : "Test",
+        "password" : "Test"
+    },
+
+    "RA_405" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    },
+
+
+    "RA_462" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    },
+
+    "RA_510" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    },
+
+    "RA_522" : {
+    "cutoHome_searchTerm" : "2018C", 
+    "vectorUS_searchTerm" : "2018C",
+    "vectorCA_searchTerm" : "2018C",
+    "cutoHome_searchTerm1" : "1759C", 
+    "vectorUS_searchTerm1" : "1759C",
+    "vectorCA_searchTerm1" : "1759C"
+    },
+
+    "RA_556" : {
+    "cutoHome_searchTerm" : "2000C", 
+    "vectorUS_searchTerm" : "2000C",
+    "vectorCA_searchTerm" : "2000C"
+    },
+
+    "RA_557" : {
+    "cutoHome_searchTermTwoWords" : "82", 
+    "vectorUS_searchTermTwoWords" : "82",
+    "vectorCA_searchTermTwoWords" : "82",
+    "cutoHome_searchTermOneWord" : "A", 
+    "vectorUS_searchTermOneWord" : "A",
+    "vectorCA_searchTermOneWord" : "A"
+    },
+
+     "RA_561" : {
+    "cutoHome_searchTermAlpha" : "ZAB", 
+    "vectorUS_searchTermAlpha" : "ZAB",
+    "vectorCA_searchTermAlpha" : "ZAB",
+    "cutoHome_searchTermNumberic" : "900", 
+    "vectorUS_searchTermNumberic" : "900",
+    "vectorCA_searchTermNumberic" : "900"
+    },
+
+     "RA_562" : {
+    "cutoHome_searchTerm1" : "C", 
+    "vectorUS_searchTerm1" : "C",
+    "vectorCA_searchTerm1" : "C",
+    "cutoHome_searchTerm2" : "A", 
+    "vectorUS_searchTerm2" : "A",
+    "vectorCA_searchTerm2" : "A",
+    "cutoHome_searchTerm3" : "N", 
+    "vectorUS_searchTerm3" : "N",
+    "vectorCA_searchTerm3" : "N"
+    },
+
+     "RA_563" : {
+    "cutoHome_searchTerm" : "2000", 
+    "vectorUS_searchTerm" : "2000",
+    "vectorCA_searchTerm" : "2000"
+    },
+
+     "RA_564" : {
+    "cutoHome_searchTerm" : "CAN OPENER", 
+    "vectorUS_searchTerm" : "CAN OPENER",
+    "vectorCA_searchTerm" : "CAN OPENER"
+    },
+
+     "RA_565" : {
+    "cutoHome_searchTermLowerCase" : "1652r", 
+    "vectorUS_searchTermLowerCase" : "1652r",
+    "vectorCA_searchTermLowerCase" : "1652r",
+    "cutoHome_searchTermUpperCase" : "1652R", 
+    "vectorUS_searchTermUpperCase" : "1652R",
+    "vectorCA_searchTermUpperCase" : "1652R"
+    },
+
+     "RA_568" : {
+    "cutoHome_searchTermUpperCase" : "1652R", 
+    "vectorUS_searchTermUpperCase" : "1652R",
+    "vectorCA_searchTermUpperCase" : "1652R"
+    },
+
+     "RA_606" : {
+     "cutoHome_searchTermLowerCase" : "Can Opener", 
+    "vectorUS_searchTermLowerCase" : "Can Opener",
+    "vectorCA_searchTermLowerCase" : "Can Opener",
+    "cutoHome_searchTermUpperCase" : "CAN OPENER", 
+    "vectorUS_searchTermUpperCase" : "CAN OPENER",
+    "vectorCA_searchTermUpperCase" : "CAN OPENER"
+    },
+
+     "RA_607" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    },
+
+     "RA_554" : {
+    "cutoHome_searchTerm" : "1759", 
+    "vectorUS_searchTerm" : "1759",
+    "vectorCA_searchTerm" : "1759"
+    }, 
+
+     "RA_646" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    },
+
+     "RA_647" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    }, 
+
+     "RA_648" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    },
+
+     "RA_653" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    }, 
+
+     "RA_654" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    },
+
+    "RA_736" : {
+    "cutoHome_searchTerm" : "CAN OPENER", 
+    "vectorUS_searchTerm" : "CAN OPENER",
+    "vectorCA_searchTerm" : "CAN OPENER"
+    }, 
+
+     "RA_394" : {
+    "vectorUS_searchTerm" : "1768C"
+    },
+
+     "RA_699" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    }, 
+
+    "RA_633" : {
+    "cutoHome_searchTerm" : "CAN OPENER", 
+    "vectorUS_searchTerm" : "CAN OPENER",
+    "vectorCA_searchTerm" : "CAN OPENER"
+    },
+
+     "RA_645" : {
+    "cutoHome_searchTerm" : "CAN OPENER", 
+    "vectorUS_searchTerm" : "CAN OPENER",
+    "vectorCA_searchTerm" : "CAN OPENER"
+    }, 
+    
+    "RA_1156" : {
+    "cutoHome_searchTerm" : "1768C", 
+    "vectorUS_searchTerm" : "1768C",
+    "vectorCA_searchTerm" : "1768C"
+    },
+
+     "RA_1213" : {
+    "vectorUS_searchTermGiftCard" : "giftcard"
+    }, 
+
+    "RA_1215" : {
+    "vectorUS_searchTermGiftCard" : "giftcard"
+    },
+
+     "RA_1217" : {
+    "vectorUS_searchTermGiftCard" : "giftcard"
+    }, 
+
+    "RA_1218" : {
+     "vectorUS_searchTermGiftCard" : "giftcard"
+    },
+
+     "RA_1221" : {
+     "vectorUS_searchTermGiftCard" : "giftcard"
+    }, 
+
+     "RA_1286" : {
+    "cutoHome_searchTerm" : "1759C", 
+    "vectorUS_searchTerm" : "1759C",
+    "vectorCA_searchTerm" : "1759C"
+    }, 
+
+    "RA_1770" : {
+    "vectorUS_searchTerm" : "1768C"
+    },
+
+    "smallGiftSet" :"2131",
+
+    "e2e_checkout" : {
+        "searchTerm1" : "1759C",
+        "searchTerm2" : "2018C",
+        "searchTerm3" : "2008C",
+        "searchTerm4" : "1764R",
+        "searchTerm5" : "1764C",
+        "searchTerm6" : "1818C",
+        "searchTerm7" : "2020C",
+        "searchTerm8" : "1720C",
+        "searchTerm9" : "1945C",
+        "searchTerm10" : "2018CR",
+        "searchTerm11" : "2159C",
+        "searchTerm12" : "1721C",
+        "setbonus": "1810C",
+        "searchTermGiftCard" : "giftcard",
+        "giftCardQty" : "200",
+        "quantity" : "3",
+        "product" : "cutlery",
+        "product1" : "chef",
+        "product2" : "Knife",
+        "productWrap" : "WRAP",
+        "paperCheckDetails" : "1111",
+        "state" : "Ohio",
+        "state_NY" : "New York",
+        "CAState" : "Alberta" ,
+        "CAEvent" : "99997223",
+        "eventName" : "99999 - Event Not Found",
+        "eventName1" : "99999266 - Aviano Air Base (Olean)",
+        "starCard" : "1111",
+        "expiryDate" : "11/13/2025",
+        "authorizationCode" : "3434",
+        "authorizationAmount" : "400",
+        "eventState_BC" : "British Columbia",
+        "eventValue" : "99999266",
+        "eventState_Q" : "Quebec",
+        "eventNotFound" : "Event not found",
+        "masqueradeSearchTerm" : "sr1"
+    },
+
+    "scriptTimeOut" : "2500000",
+    "stepTimeOut" : "300000",
+    "elementTimeOut" : "25000" 
+
+}
+
+
