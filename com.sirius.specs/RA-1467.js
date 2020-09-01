@@ -10,15 +10,14 @@ var addressPage = require('../com.sirius.reusables/addressPage.js');
 var testInputs = require('../com.sirius.testData/data.json');
 var reportInfo = require('../com.sirius.library/reportInfo.js');
 
-describe('RA-1466 - Within Login screen, ensure that “Forgot User ID or Password” link is present below Login btn & on click, ensure that the app launches the default web browser for the device and loads the Vector Connect password recovery page', function () {
+describe('RA-1467 - Within the Login screen, ensure that a “Forgot Password?” Link is present below the ‘Login’ button & on click, ensure that the Rep is navigated to Reset Password page', function () {
 
     beforeEach(function () {
         launcher.launchApplication();
     })
 
-    it('RA-1466 - Common Company', function () {
-        loginApp.forgotPassword();
-        
+    it('RA-1467 - Common Company', function () {
+        loginApp.forgotPasswordVerification();
         reportInfo.log('Script completed'); 
     },testInputs.scriptTimeOut)
 
